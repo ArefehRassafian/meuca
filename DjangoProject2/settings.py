@@ -26,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6$ey$aeit2u-@e*nu)&t3v!-#(^yenzxs+yj689a8061-%84+*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+load_dotenv()
 DEBUG = os.getenv("DEBUG","False") == "True"
 
 ALLOWED_HOSTS = []
@@ -157,7 +158,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-load_dotenv()
+
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
