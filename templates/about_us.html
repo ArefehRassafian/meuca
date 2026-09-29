@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+        درباره ما|میوکا
+{% endblock %}
+
+{% block css %}
+
+    <!-- Animation css -->
+    <link href='{% static "assets/vendor/animation/animate.min.css"%}' rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!--flag Icon css-->
+    <link href='{% static "assets/vendor/flag-icons-master/flag-icon.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- tabler icons-->
+    <link href='{% static "assets/vendor/tabler-icons/tabler-icons.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- apexcharts css-->
+    <link href='{% static "assets/vendor/apexcharts/apexcharts.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href='{% static "assets/vendor/glightbox/glightbox.min.css"%}' rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href='{% static "assets/vendor/bootstrap/bootstrap.min.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href='{% static "assets/vendor/simplebar/simplebar.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href='{% static "assets/css/style.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href='{% static "assets/css/responsive.css"%}' rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href='{% static "assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/rtl.css"%}'>
+{% endblock %}
+
+{% block js %}
+        <!-- latest jquery-->
+    <script src='{% static "assets/js/jquery-3.6.3.min.js"%}'></script>
+
+    <!-- Boo'strap js -->
+    <script src='{% static "assets/vendor/bootstrap/bootstrap.bundle.min.js"%}'></script>
+
+    <!-- Simple bar js-->
+    <script src='{% static "assets/vendor/simplebar/simplebar.js"%}'></script>
+
+    <!-- phosphor js -->
+    <script src='{% static "assets/vendor/phosphor/phosphor.js"%}' ></script>
+
+    <!-- Glight js -->
+    <script src='{% static "assets/vendor/glightbox/glightbox.min.js"%}'></script>
+
+    <!-- apexcharts-->
+    <script src='{% static "assets/vendor/apexcharts/apexcharts.min.jsv"%}'></script>
+
+    <!-- Customizer js-->
+    <script src='{% static "assets/js/customizer.js"%}'></script>
+
+    <!-- Ecommerce js-->
+    <script src='{% static "assets/js/ecommerce_dashboard.js"%}'></script>
+
+    <!-- App js-->
+    <script src='{% static "assets/js/script.js"%}'></script>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+
+                <div class="row g-0 align-items-center">
+
+                    <!-- تصویر -->
+                    <div class="col-md-5">
+                        <img
+                            src="{% static 'assets/images/logo/1.png' %}"
+                            class="w-100 h-100 object-fit-cover"
+                            alt="درباره ما"
+                            style="min-height: 420px;"
+                        >
+                    </div>
+
+                    <!-- متن -->
+                    <div class="col-md-7">
+
+                        <div class="card-body p-4 p-lg-5">
+
+                            <h2 class="fw-bold mb-3">
+                                درباره ما
+                            </h2>
+
+                            <p class="text-muted lh-lg">
+                                {{ setting.about | linebreaksbr }}
+                            </p>
+
+
+                            <hr class="my-4">
+                            <div class="row text-center g-4">
+
+                                <div class="col-md-6">
+
+                                    <div class="border rounded-3 p-3 h-100">
+
+                                        <i class="bi bi-telephone-fill fs-3 text-success"></i>
+
+                                        <h6 class="fw-bold mt-2">
+                                            تماس با ما
+                                        </h6>
+
+                                        <a href="tel:{{ setting.phone }}"
+                                           class="text-decoration-none text-muted">
+
+                                            {{ setting.phone }}
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <div class="border rounded-3 p-3 h-100">
+
+                                        <i class="bi bi-telegram fs-3 text-primary"></i>
+
+                                        <h6 class="fw-bold mt-2">
+                                            تلگرام ما
+                                        </h6>
+
+                                        <a href="https://t.me/{{ setting.id_tel|slice:'1:' }}"
+                                           target="_blank"
+                                           class="text-decoration-none text-muted">
+
+                                            {{ setting.id_tel }}
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

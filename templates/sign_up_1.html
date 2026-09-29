@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="میوکا" name="description">
+    <meta content="میوکا" name="keywords">
+    <meta content="میوکا" name="author">
+    <link href="{% static 'assets/images/logo/favicon1.png' %}" rel="icon" type="image/x-icon">
+    <link href="{% static 'assets/images/logo/favicon1.png' %}" rel="shortcut icon" type="image/x-icon">
+
+    <title>ثبت نام  |  میوکا </title>
+
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+</head>
+
+<body class="rtl">
+    <div class="app-wrapper d-block">
+        <div class="">
+            <!-- Body main section starts -->
+            <main class="w-100 p-0">
+                <!-- Create Account start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 p-0">
+                            <div class="login-form-container">
+                                <div class="mb-4">
+                                    <a class="logo" href="index.html">
+                                        <img alt="توضیحات تصویر" src="{% static 'assets/images/logo/3.png' %}" width=100%>
+                                    </a>
+                                </div>
+                                <div class="form_container">
+
+                                    <form class="app-form" method="post">
+
+                                        {% csrf_token %}
+
+                                        <div class="mb-3 text-center">
+                                            <h3>ایجاد حساب کاربری</h3>
+                                            <p class="f-s-12 text-secondary">
+                                                برای ثبت‌نام مشخصات خود را وارد کنید.
+                                            </p>
+                                        </div>
+
+                                        {% if form.non_field_errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in form.non_field_errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="row">
+
+                                            <!-- نام -->
+                                            <div class="col mb-3">
+                                                <label class="form-label" for="id_first_name">
+                                                    نام
+                                                </label>
+
+                                                {{ form.first_name }}
+                                                {% if form.first_name.errors %}
+                                                    <div class="text-danger mt-1">
+                                                        {% for error in form.first_name.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <!-- نام خانوادگی -->
+                                            <div class="col mb-3">
+                                                <label class="form-label" for="id_last_name">
+                                                    نام خانوادگی
+                                                </label>
+
+                                                {{ form.last_name }}
+                                                {% if form.last_name.errors %}
+                                                    <div class="text-danger mt-1">
+                                                        {% for error in form.last_name.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <!-- نام کاربری -->
+                                        <div class=" mb-3">
+                                            <label class="form-label" for="id_username">
+                                                نام کاربری
+                                            </label>
+
+                                            {{ form.username }}
+                                            {% if form.username.errors %}
+                                                <div class="text-danger mt-1">
+                                                    {% for error in form.username.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                        <!-- ایمیل -->
+                                        <div class="mb-3">
+                                            <label class="form-label" for="id_email">
+                                                شماره تلفن
+                                            </label>
+
+                                           {{ form.phone_number }}
+                                            {% if form.phone_number.errors %}
+                                                <div class="text-danger mt-1">
+                                                    {% for error in form.phone_number.errors %}
+                                                        {{ error }}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+
+                                        <!-- رمز عبور -->
+                                        <div class="row">
+                                            <div class="col mb-3">
+
+                                                <label class="form-label" for="id_password1">
+                                                    رمز ورود
+                                                </label>
+
+                                                {{ form.password1 }}
+                                                {% if form.password1.errors %}
+                                                    <div class="text-danger mt-1">
+                                                        {% for error in form.password1.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <!-- تکرار رمز عبور -->
+                                            <div class="col mb-3">
+                                                <label class="form-label" for="id_password2">
+                                                    تکرار رمز ورود
+                                                </label>
+
+                                               {{ form.password2 }}
+                                                {% if form.password2.errors %}
+                                                    <div class="text-danger mt-1">
+                                                        {% for error in form.password2.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+
+                                        <!-- دکمه ثبت نام -->
+                                        <div>
+                                            <button
+                                                class="btn btn-primary w-100"
+                                                type="submit"
+                                            >
+                                                ثبت‌نام
+                                            </button>
+                                        </div>
+
+
+                                        <!-- ورود -->
+                                    <div class="text-center">
+                                            <a
+                                                class="text-secondary text-decoration-underline"
+                                                href="{% url 'accounts:login' %}"
+                                            >
+                                                حساب دارید؟ ورود
+                                            </a>
+                                        </div>
+
+
+                                    </form>
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Create Account end -->
+            </main>
+            <!-- Body main section ends -->
+        </div>
+    </div>
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

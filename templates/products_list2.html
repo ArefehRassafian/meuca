@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    تخفیف شاپ | میوکا
+{% endblock %}
+
+{% block css %}
+
+
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- nouislider js css -->
+    <link href="{% static 'assets/vendor/nouislider/nouislider.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- apexcharts css-->
+    <link href="{% static 'assets/vendor/apexcharts/apexcharts.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+
+
+{% endblock %}
+
+{% block js %}
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- nouislider js -->
+    <script src="{% static 'assets/vendor/nouislider/nouislider.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/nouislider/wNumb.min.js' %}"></script>
+
+
+    <!-- js -->
+    <script src="{% static 'assets/js/product.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+
+
+            <!-- Product start -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div
+                                    class="product-header d-flex justify-content-between gap-3 align-items-center">
+
+                                <div class="d-flex align-items-center">
+                                    <a class="ms-3 toggle-btn d-inline-block d-lg-none" role="button"><i
+                                            class="ti ti-align-justified f-s-24"></i></a>
+                                    <form class="app-form app-icon-form d-inline-block ">
+                                        <div class="position-relative">
+                                            <input aria-label="جستجو" class="form-control"
+                                                   placeholder="جستجو..." type="search" name="search"
+                                                   value="{{ request.GET.search|default:'' }}">
+
+                                            <i class="ti ti-search text-dark"></i>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- product box start -->
+                <div class="col-12>
+                    <div class="product-wrapper-grid">
+                        <div class="row">
+
+                            <!-- Product box -->
+                            {% for product in ps %}
+                                <div class="col-xxl-3  col-lg-3 col-md-4 col-sm-6 d-flex">
+                                    <div class="card overflow-hidden w-100 h-100">
+                                        <div class="card-body p-0">
+                                            <div class="product-content-box">
+                                                <div class="product-grid">
+                                                    <div class="product-image">
+                                                        <a class="image" href="#">
+
+                                                            <img alt="توضیحات تصویر" class="pic-1"
+                                                                 style="height: 200px;overflow: hidden"
+                                                                 src={{ product.images.all.0.image.url }}>
+
+                                                            <img alt="توضیحات تصویر" class="images_box"
+                                                                 style="height: 200px;overflow: hidden"
+                                                                 src={{ product.images.all.1.image.url }}>
+                                                        </a>
+                                                        <ul class="product-links">
+
+                                                            <li><a class="bg-primary h-30 w-30 d-flex-center b-r-20"
+                                                                   href="{% url 'orders_cart:cart_add' product.id %}"><i
+                                                                    class="ti ti-shopping-cart f-s-18 text-light"></i></a>
+                                                            </li>
+                                                            <li><a class="bg-success h-30 w-30 d-flex-center b-r-20"
+                                                                   href={% url 'products:product_details' product.id %}><i
+                                                                    class="ti ti-eye f-s-18 text-light"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                                <div class="p-3">
+                                                    <div
+                                                            class="d-flex justify-content-between align-items-center">
+                                                        <a class="m-0 f-s-20 f-w-500"
+                                                           href={% url 'products:product_details' product.id %}><small>{{ product.name|truncatechars:20  }}</small></a>
+
+                                                    </div>
+
+                                                    <div class="pricing-box">
+
+                                                            {% if product.discount_percent == 0 %}
+                                                                <h6>{{ product.price }} تومان</h6>
+                                                            {% else %}
+                                                                <h6>{{ product.final_price }} تومان <span>(<del>{{ product.price }}</del>)</span><span
+                                                                        class="text-success me-2">{{ product.discount_percent }}%تخفیف</span>
+                                                                </h6>
+                                                            {% endif %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Product box -->
+                            {% empty %}
+                                <div class="col-12">
+
+                                    <div class="no-events">
+
+                                        هیچ کالایی پیدا نشد.
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                            {% if ps.has_other_pages %}
+
+                                <ul class="page-num d-flex pagination" style="gap:15px;" dir="ltr">
+                                    {% if ps.has_previous %}
+                                        <li><a href="?page=
+
+                                                {{ ps.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">
+                                            <i
+                                                    class="fa fa-angle-double-left"></i></a></li>
+                                    {% endif %}
+                                    {% for i in ps.paginator.page_range %}
+                                        {% if ps.number == i %}
+                                            <li class="active"><a href="?page=
+
+                                                    {{ i }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">{{ i }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li><a href="?page=
+
+                                                    {{ i }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"> {{ i }} </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if ps.has_next %}
+                                        <li><a href="?page=
+
+                                                {{ ps.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">
+                                            <i
+                                                    class="fa fa-angle-double-right"></i></a></li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- product box end -->
+            </div>
+            <!-- Product end -->
+        </div>
+    </main>
+
+
+{% endblock %}
+
+

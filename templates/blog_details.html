@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    جزئیات بلاگ | میوکا
+{% endblock %}
+
+{% block css %}
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href="{% static 'assets/vendor/glightbox/glightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- slick css -->
+    <link href="{% static 'assets/vendor/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/slick/slick-theme.css' %}" rel="stylesheet">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Glightbox js -->
+    <script src="{% static 'assets/vendor/glightbox/glightbox.min.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- slick-file -->
+    <script src="{% static 'assets/vendor/slick/slick.min.js' %}"></script>
+
+    <!-- blog js -->
+    <script src="{% static 'assets/js/blog.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+
+    <main>
+        <div class="container-fluid">
+            <!-- Blog Details start -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xxl-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="post-div mb-3">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <img class=" img-fluid object-fit-contain w-100 h-100"
+                                             src="{{ blog.images.all.0.image.url }}">
+                                    </div>
+                                    {% for image in blog.images.all %}
+                                        <div class="col-6 col-sm-3">
+                                            <a class="glightbox img-fluid " data-glightbox="type: image;"
+                                               href="{{image.image.url}}">
+                                                <img alt="توضیحات تصویر" class="img-fluid "
+                                                     style="width: 80px;height: 100px;"
+                                                     src="{{image.image.url}}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+
+                            <h5 class="mb-3 text-dark f-w-600">{{ blog.title }}</h5>
+
+                            <div class="mb-3">
+                                <p class="text-secondary">
+                                    {{ blog.text|linebreaksbr }}
+                                </p>
+
+                            </div>
+                            <div class="app-divider-v mb-2"></div>
+                            <div class="d-flex align-items-center flex-wrap ">
+                                <div class="flex-grow-1 ps-2 me-2">
+                                    <h6 class="mb-0 f-w-500 text-dark">{{ blog.author }}</h6>
+                                    <div class="text-muted f-s-12"> {{ blog.created_jalali }}</div>
+                                    <div class="text-muted f-s-12"> آخرین بروزرسانی{{ blog.updated_jalali }}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Blog Details end -->
+        </div>
+
+    </main>
+
+    <!-- Body main section ends -->
+{% endblock %}
+
+

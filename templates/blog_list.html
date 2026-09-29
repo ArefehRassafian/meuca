@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    بلاگ | میوکا
+{% endblock %}
+
+{% block css %}
+   <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href="{% static 'assets/vendor/glightbox/glightbox.min.css' %}" rel="stylesheet">
+
+    <!-- slick css -->
+    <link href="{% static 'assets/vendor/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/slick/slick-theme.css' %}" rel="stylesheet">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- slick-file -->
+    <script src="{% static 'assets/vendor/slick/slick.min.js' %}"></script>
+
+    <!-- Glight js -->
+    <script src="{% static 'assets/vendor/glightbox/glightbox.min.js' %}"></script>
+
+    <!--js-->
+    <script src="{% static 'assets/js/blog.js' %}"></script>
+
+    <!--js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+                <main>
+                    <div class="container-fluid">
+
+                        <!-- blog start -->
+                        <div class="row blog-section dflex">
+                            {% for blog in blogs %}
+                            <!-- Collect Moments start -->
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card vertical-blog mb-3 hover-effect overflow-hidden">
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <a class="glightbox img-hover-zoom"
+                                                data-glightbox="type: image; zoomable: true;"
+                                                href="{{  blog.images.all.0.image.url }}">
+                                                <img alt="توضیحات تصویر" class="card-img-top"
+                                                    src="{{  blog.images.all.0.image.url }}">
+                                            </a>
+
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-body">
+
+                                                <a href={% url 'main:blog_details'  blog.id %}>
+                                                    <h5 class="title-text mb-3 bloglink">{{ blog.title}}</h5>
+                                                </a>
+                                                {{ blog.text|truncatechars:200 }}
+                                                <div class="app-divider-v mb-2"></div>
+
+                                                    <div class="pe-1">
+                                                        <h6 class="text-dark f-w-500 mb-0"> {{ blog.author}}</h6>
+                                                        <span><i class="ti ti-calendar-due blog-date-icon"></i></span><p class="text-secondary f-s-12 mb-0">{{ blog.created_jalali}}</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                            <!-- Collect Moments end -->
+                            {% endfor %}
+
+                        </div>
+                        <!-- blog end -->
+                    </div>
+                </main>
+    <!-- Body main section ends -->
+{% endblock %}
+
+

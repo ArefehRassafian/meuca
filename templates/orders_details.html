@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    جزئیات سفارش | میوکا
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Data Table css-->
+    <link href="{% static 'assets/vendor/datatable/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/vendor/datatable/datatable2/buttons.dataTables.min.css' %}" rel="stylesheet"
+          type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- datatable js -->
+    <script src="{% static 'assets/vendor/datatable/jquery.dataTables.min.js' %}"></script>
+
+    <!-- orders_details js-->
+    <script src="{% static 'assets/js/orders_details.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+
+            <!-- Order Details start -->
+            <div class="row order-details">
+                <div class="col-xxl-9">
+                    <div class="row">
+                        <!-- Order Details start -->
+                        <div class="col-lg-4">
+                            <div class="card order-details-card">
+                                <div class="card-header">
+                                    <h5 class="text-nowrap">هزینه</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class=" justify-content-between">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-cart f-s-18 ms-2 text-secondary"></i>هزینه محصولات
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{{ order.total_price_with_dis }}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-percent f-s-18 ms-2"></i>درصد مالیات</h6>
+                                        <div class="text-end">
+                                            <p>{{ order.tax_percent }}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="ti ti-truck-delivery f-s-18 ms-2"></i>هزینه ارسال</h6>
+                                        <div class="text-end">
+                                            <p> {{order.shipping_cost}}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-wallet2 f-s-18 ms-2"></i>هزینه نهایی</h6>
+                                        <div class="text-end">
+                                            <p>{{order.final_price}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Order Details end -->
+
+                        <!-- Customer Details start -->
+                        <div class="col-lg-4">
+                            <div class="card order-details-card">
+                                <div class="card-header">
+                                    <h5>جزئیات  گیرنده</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class=" justify-content-between">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-person text-secondary f-s-18 ms-2"></i>نام
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{{ order.receiver_name }} </p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3 >
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-envelope f-s-18 text-secondary ms-2"></i>ایمیل</h6>
+                                        <div class="text-end">
+                                            <p>{{ order.email}}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-telephone f-s-18 text-secondary ms-2"></i>شماره تماس
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{{ order.receiver_phone}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Customer Details end -->
+
+                        <!-- Documents start -->
+                        <div class="col-lg-4">
+                            <div class="card order-details-card">
+                                <div class="card-header">
+                                    <h5> اسناد و پیگیری</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class=" justify-content-between">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-box-seam text-secondary f-s-18 text-secondary ms-2"></i>وضعیت سفارش
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{% if order.status == "waiting_payment" %}
+                                            <td><span class="badge text-light-warning">در انتظار پرداخت</span></td>
+                                        {% elif order.status == "awaiting_approval" %}
+                                            <td><span class="badge text-light-info">در انتظار تایید</span></td>
+                                        {% elif order.status == "sending" %}
+                                            <td><span class="badge text-light-info">در حال ارسال</span></td>
+                                        {% elif order.status == "returned" %}
+                                            <td><span class="badge text-light-danger">بازگشتی</span></td>
+                                        {% elif order.status == "cancelled" %}
+                                            <td><span class="badge text-light-dark">کنسل شد </span></td>
+                                        {% else %}
+                                            <td><span class="badge text-light-success">تحویل داده شد.</span></td>
+                                        {% endif %}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-calendar-check f-s-18 text-secondary ms-2"></i>تاریخ ثبت
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{{ order.payment_time_jalali }}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-arrow-clockwise f-s-18 text-secondary ms-2"></i>آخرین بروزرسانی
+
+                                        </h6>
+                                        <div class="text-end">
+                                            <p>{{ order.updated_at_jalali }}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" justify-content-between mt-3">
+                                        <h6 class="f-w-600 text-dark"><i
+                                                class="bi bi-upc-scan f-s-18 text-secondary ms-2"></i>کدپیگیری
+
+                                        </h6>
+                                        <div class="text-end">
+                                            <small>{{ order.tracking_code }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Documents end -->
+                    </div>
+                    <div class="card order-details-card">
+                        <div class="card-header">
+                            <h5>آدرس</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+
+                                <div class="text-start">
+                                    <p> {{order.address | linebreaksbr}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Order start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>
+                                جزئیات سفارش
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div
+                                    class="orders-details-datatable app-datatable-default app-scroll table-responsive">
+                                <table class="table table-bottom-border text-center align-middle mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">تصویر</th>
+                                        <th> اسم کالا</th>
+                                        <th scope="col">تعداد</th>
+                                        <th scope="col">قیمت</th>
+                                        <th scope="col">درصد تخفیف</th>
+                                        <th scope="col">قیمت نهایی</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in order.items.all %}
+                                        <tr>
+                                            <td class="text-center">
+                                                <img alt="توضیحات تصویر"
+                                                     class="h-50 bg-light-secondary b-r-10"
+                                                     src="{{ item.product.images.all.0.image.url }}">
+                                            </td>
+                                            <td class="text-center">{{ item.product.name }}</td>
+                                            <td class="text-center">{{ item.quantity }}</td>
+                                            <td class="text-center">{{ item.price_all }}</td>
+                                            <td class="text-success f-w-500 text-center">{{ item.discount_percent }}</td>
+                                            <td class="f-w-600 bold text-center">{{ item.price_with_dis_all }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Order end -->
+
+                </div>
+
+            </div>
+            <!-- Order Details end -->
+        </div>
+    </main>
+    <!-- Body main section ends -->
+
+
+{% endblock %}
+
+

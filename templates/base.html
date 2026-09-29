@@ -1,0 +1,62 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% block meta %}{% endblock %}
+    <meta content="میوکا" name="keywords">
+    <meta content="میوکا" name="author">
+    <link href='{% static "assets/images/logo/favicon1.png" %}' rel="icon" type="image/x-icon">
+    <link href='{% static "assets/images/logo/favicon1.png" %}' rel="shortcut icon" type="image/x-icon">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    {% block css %}{% endblock %}
+
+
+</head>
+
+<body class="rtl">
+<div class="app-wrapper">
+
+    <div class="loader-wrapper">
+        <div class="loader_24"></div>
+    </div>
+
+    {% include "partials/sidebar.html" %}
+
+
+    {% render_partial "orders_cart:header_cart" %}
+
+    <div class="app-content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+
+    <!-- tap on top -->
+    <div class="go-top">
+            <span class="progress-value">
+                <i class="ti ti-chevron-up"></i>
+            </span>
+    </div>
+
+    {% include "partials/footer.html" %}
+</div>
+
+
+{% block js %}{% endblock %}
+
+
+</body>
+
+</html>
+
+
+
+

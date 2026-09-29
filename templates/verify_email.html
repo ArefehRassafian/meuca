@@ -1,0 +1,220 @@
+{% load  static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="میوکا" name="description">
+    <meta content="میوکا" name="keywords">
+    <meta content="میوکا" name="author">
+    <link href="{% static 'assets/images/logo/favicon1.png' %}" rel="icon" type="image/x-icon">
+    <link href="{% static 'assets/images/logo/favicon1.png' %}" rel="shortcut icon" type="image/x-icon">
+
+    <title>احراز هویت | میوکا</title>
+
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+</head>
+
+<body class="rtl">
+<div class="app-wrapper d-block">
+    <div class="">
+        <!-- Body main section starts -->
+        <main class="w-100 p-0">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Verify OTP 1 start -->
+                    <div class="col-12 p-0 ">
+                        <div class="login-form-container">
+                            <div class="mb-4">
+                                <a class="logo" href="index.html">
+                                    <img alt="توضیحات تصویر" src="{% static 'assets/images/logo/3.png' %}" width=100%>
+                                </a>
+                            </div>
+                            <div class="form_container">
+
+                                <form class="app-form" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-5 text-center">
+                                                <h2 class="text-primary">تایید حساب</h2>
+                                                <p>کد 6 رقمی که برای ایمیل شما ارسال شده است وارد کنید</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="verification-box dflex">
+
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <input
+                                                                class="form-control h-40 w-40 text-center"
+                                                                id="six"
+                                                                name="code6"
+                                                                maxlength="1"
+                                                                oninput="digitValidate(this)"
+                                                                onkeyup="tabChange(6)"
+                                                                type="text"
+                                                                inputmode="numeric"
+                                                                required
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                                class="form-control h-40 w-40 text-center"
+                                                                id="five"
+                                                                name="code5"
+                                                                maxlength="1"
+                                                                oninput="digitValidate(this)"
+                                                                onkeyup="tabChange(5)"
+                                                                type="text"
+                                                                inputmode="numeric"
+                                                                required
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                                class="form-control h-40 w-40 text-center"
+                                                                id="four"
+                                                                name="code4"
+                                                                maxlength="1"
+                                                                oninput="digitValidate(this)"
+                                                                onkeyup="tabChange(4)"
+                                                                type="text"
+                                                                inputmode="numeric"
+                                                                required
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                                class="form-control h-40 w-40 text-center"
+                                                                id="three"
+                                                                name="code3"
+                                                                maxlength="1"
+                                                                oninput="digitValidate(this)"
+                                                                onkeyup="tabChange(3)"
+                                                                type="text"
+                                                                inputmode="numeric"
+                                                                required
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                                class="form-control h-40 w-40 text-center"
+                                                                id="two"
+                                                                name="code2"
+                                                                maxlength="1"
+                                                                oninput="digitValidate(this)"
+                                                                onkeyup="tabChange(2)"
+                                                                type="text"
+                                                                inputmode="numeric"
+                                                                required
+                                                        >
+                                                    </div>
+                                                    <div>
+
+                                                    <input
+                                                            class="form-control h-40 w-40 text-center"
+                                                            id="one"
+                                                            name="code1"
+                                                            maxlength="1"
+                                                            oninput="digitValidate(this)"
+                                                            onkeyup="tabChange(1)"
+                                                            type="text"
+                                                            inputmode="numeric"
+                                                            required
+                                                    >
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        {% if error %}
+
+                                            <div class="alert alert-danger mb-3">
+                                                {{ error }}
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary w-100" type="submit">تایید</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Verify OTP 1 end -->
+                </div>
+            </div>
+        </main>
+        <!-- Body main section ends -->
+    </div>
+</div>
+<!-- latest jquery-->
+<script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+<!-- Bootstrap js-->
+<script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+{#<script src="{% static 'assets/js/two_step.js' %}"></script>#}
+<script>
+    const inputs = [
+        document.querySelector('[name="code1"]'),
+        document.querySelector('[name="code2"]'),
+        document.querySelector('[name="code3"]'),
+        document.querySelector('[name="code4"]'),
+        document.querySelector('[name="code5"]'),
+        document.querySelector('[name="code6"]')
+    ];
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 1);
+
+            // code1 → code2 → ... → code6
+            if (this.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', function (e) {
+            // Backspace → برگشت به فیلد قبلی
+            if (e.key === 'Backspace' && !this.value && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
+

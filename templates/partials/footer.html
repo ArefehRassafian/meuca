@@ -1,0 +1,23 @@
+{% load static %}
+<!-- Footer Section starts-->
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9 col-12">
+                        <p class="footer-text f-w-600 mb-0">{{ setting.footer|linebreaksbr }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="footer-text text-end">
+                            {% if user.is_authenticated %}
+                                <a class="f-w-500 text-primary" href="{% url 'accounts:contact_us' %}">
+                            {% else %}
+                                <a class="f-w-500 text-primary" href="{% url 'accounts:login' %}">
+                            {% endif %}
+                                ارتباط با ما
+                                   <i class="ti ti-message"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section ends-->

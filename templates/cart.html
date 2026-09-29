@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    سبدخرید| میوکا
+{% endblock %}
+
+{% block css %}
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- Data Table css-->
+    <link href="{% static 'assets/vendor/datatable/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/vendor/datatable/datatable2/buttons.dataTables.min.css' %}" rel="stylesheet"
+          type="text/css">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- datatable js-->
+    <script src="{% static 'assets/vendor/datatable/jquery.dataTables.min.js' %}"></script>
+
+    <!-- cart js-->
+    <script src="{% static 'assets/js/cart.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+
+            <!-- cart start -->
+            <div class="row cart-table">
+
+                <div class="col-lg-8">
+                    <div class="card">
+
+                        <div class="card-body p-0">
+                            <!-- table -->
+                            <div class="app-scroll table-responsive app-datatable-default">
+                                <table class="table cart-product-table align-middle" id="example">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">نام محصول</th>
+                                        <th scope="col">قیمت</th>
+                                        <th scope="col">تعداد</th>
+                                        <th scope="col"> کل</th>
+                                        <th scope="col"> عملیات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart %}
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center gap-2">
+                                                                <span
+                                                                        class="b-1-light bg-primary-200 p-1 h-45 w-45 d-flex-center b-r-12 flex-shrink-0 overflow-hidden box-list-img">
+                                                                    <img alt="توضیحات تصویر" class="img-fluid"
+                                                                         src="{{item.image }}">
+                                                                </span>
+
+                                                    <div class="cart-details">
+                                                        <p class="fs-6">
+                                                            {{ item.name }}
+                                                        </p>
+                                                        <small>{{ item.code }}</small>
+
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <td>{{ item.price }}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a href="{% url 'orders_cart:cart_sub' item.id %}">
+                                                        <button
+                                                                class="btn btn-danger h-35 w-35 d-flex-center b-r-6 p-0 decrement">
+                                                            -
+                                                        </button>
+                                                    </a>
+                                                    <input
+                                                            class="h-35 w-35 ms-1 me-1 border b-r-6 text-center count"
+                                                            type="text" value="{{ item.quantity }}">
+                                                    <a href="{% url 'orders_cart:cart_add' item.id %}">
+                                                        <button
+                                                                class="btn btn-primary h-35 w-35 d-flex-center b-r-6 p-0 increment">
+                                                            +
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    {{ item.total }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'orders_cart:cart_del' item.id %}">
+
+                                                    <button
+                                                            class="btn btn-outline-danger icon-btn b-r-4 delete-btn"
+                                                            type="button">
+                                                        <i class="ti ti-trash"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- table -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>جزئیات قیمت</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table cart-side-table mb-0">
+                                            <tbody>
+
+                                            <tr class="total-price">
+                                                <th>جمع جزء :</th>
+                                                <th class="text-end">
+                                                                    <span id="cart-sub">
+                                                                        {{ s }}
+                                                                    </span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>تخفیف:
+                                                </td>
+                                                <td class="text-end" id="cart-discount">-
+                                                    {{ d }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>هزینه ارسال :</td>
+                                                <td class="text-end" id="cart-shipping">
+                                                    50000
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>مالیات (10%) :</td>
+                                                <td class="text-end" id="cart-tax"> {{ m }}
+                                                </td>
+                                            </tr>
+                                            <tr class="total-price">
+                                                <th>جمع کل (تومان) :</th>
+                                                <th class="text-end">
+                                                                    <span id="cart-total">
+                                                                        {{ sdms }}
+                                                                    </span>
+                                                </th>
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                        <a class="btn btn-success " href="{% url 'orders_cart:checkout' %}" role="button"
+                                                            target="_blank">پرداخت <i
+                                                                class="ti ti-shopping-cart"></i></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- cart end -->
+        </div>
+    </main>
+    <!-- Body main section ends -->
+
+{% endblock %}
+
+

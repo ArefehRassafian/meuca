@@ -1,0 +1,49 @@
+.profile-picture-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid #eee;
+}
+
+.picture-button {
+    position: absolute;
+
+    bottom: 0;
+    right: 5px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #2c2255;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    border: 3px solid white;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.picture-button:hover {
+    transform: scale(1.08);
+    background: #058293;
+}

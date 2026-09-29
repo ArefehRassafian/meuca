@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    لیست سفارش ها | میوکا
+{% endblock %}
+
+{% block css %}
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Data Table css-->
+    <link href="{% static 'assets/vendor/datatable/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/vendor/datatable/datatable2/buttons.dataTables.min.css' %}" rel="stylesheet"
+          type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/vendor/JalaliDatePicker/jalalidatepicker.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- datatable js -->
+    <script src="{% static 'assets/vendor/datatable/jquery.dataTables.min.js' %}"></script>
+
+    <script src="{% static 'assets/vendor/JalaliDatePicker/jalalidatepicker.min.js' %}"></script>
+    <style>
+        jdp-container {
+            z-index: 9999999 !important;
+        }
+    </style>
+    <script>
+        jalaliDatepicker.startWatch({
+            showTodayBtn: true,
+            showEmptyBtn: true,
+            time: true,
+            topSpace: 10,
+            bottomSpace: 30,
+            dayRendering(opt, input) {
+                return {
+                    isHollyDay: opt.day == 1
+                }
+            }
+        });
+    </script>
+    <!-- orders_details js-->
+    <script src="{% static 'assets/js/orders_list.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <!-- Body main section starts -->
+
+    <main>
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <!-- table -->
+                        <div class="order-list-datatable app-scroll table-responsive">
+                            <table class="table table-bottom-border align-middle mb-0">
+                                <thead>
+                                <tr>
+
+                                    <th></th>
+                                    <th scope="col"> تاریخ ثبت سفارش</th>
+                                    <th scope="col"> مبلغ سفارش</th>
+                                    <th scope="col">وضعیت</th>
+                                    <th scope="col">آخرین بروزرسانی</th>
+
+                                    <th scope="col"></th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for order in orders %}
+
+
+                                    <tr>
+
+
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ order.payment_time_jalali }}</td>
+                                        <td>{{ order.final_price }}</td>
+
+                                        {% if order.status == "waiting_payment" %}
+                                            <td><span class="badge text-light-warning">در انتظار پرداخت</span></td>
+                                        {% elif order.status == "awaiting_approval" %}
+                                            <td><span class="badge text-light-info">در انتظار تایید</span></td>
+                                        {% elif order.status == "sending" %}
+                                            <td><span class="badge text-light-info">در حال ارسال</span></td>
+                                        {% elif order.status == "returned" %}
+                                            <td><span class="badge text-light-danger">بازگشتی</span></td>
+                                        {% elif order.status == "cancelled" %}
+                                            <td><span class="badge text-light-dark">کنسل شد </span></td>
+                                        {% else %}
+                                            <td><span class="badge text-light-success">تحویل داده شد.</span></td>
+                                        {% endif %}
+
+                                        <td>{{ order.updated_at_jalali }}</td>
+
+                                        <td><a class="btn btn-light-primary icon-btn w-30 h-30 b-r-22 ms-2"
+                                               href="{% url 'orders_cart:order_details' order.id %}" role="button"
+                                               target="_blank"> <i class="ti ti-eye"></i></a></td>
+
+
+                                    </tr>
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- table -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Body main section ends -->
+
+{% endblock %}
+

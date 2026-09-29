@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    پروفایل | میوکا
+{% endblock %}
+
+{% block css %}
+    <!--font-awesome-css-->
+    <link href='{% static "assets/vendor/fontawesome/css/all.css" %}' rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <link href='{% static "assets/vendor/animation/animate.min.css" %}' rel="stylesheet">
+    <!-- tabler icons-->
+    <link href='{% static "assets/vendor/tabler-icons/tabler-icons.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href='{% static "assets/vendor/bootstrap/bootstrap.min.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href='{% static "assets/vendor/glightbox/glightbox.min.css" %}' rel="stylesheet">
+
+    <!-- filepond css -->
+    <link href='{% static "assets/vendor/filepond/filepond.css" %}' rel="stylesheet">
+    <link href='{% static "assets/vendor/filepond/image-preview.min.css" %}' rel="stylesheet">
+
+    <!-- slick css -->
+    <link href='{% static "assets/vendor/slick/slick.css" %}' rel="stylesheet">
+    <link href='{% static "assets/vendor/slick/slick-theme.css" %}' rel="stylesheet">
+
+    <!-- simplebar css-->
+    <link href='{% static "assets/vendor/simplebar/simplebar.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href='{% static "assets/css/style.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href='{% static "assets/css/responsive.css" %}' rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href='{% static "assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/rtl.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/pico.css" %}'>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        const pictureInput = document.getElementById('id_picture');
+        const profilePreview = document.getElementById('profilePreview');
+
+        pictureInput.addEventListener('change', function () {
+
+            const file = this.files[0];
+
+            if (file) {
+                profilePreview.src = URL.createObjectURL(file);
+            }
+
+        });
+    </script>
+    <!-- latest jquery-->
+    <script src='{% static "assets/js/jquery-3.6.3.min.js" %}'></script>
+
+    <!-- Bootstrap js-->
+    <script src='{% static "assets/vendor/bootstrap/bootstrap.bundle.min.js" %}'></script>
+
+    <!-- Simple bar js-->
+    <script src='{% static "assets/vendor/simplebar/simplebar.js" %}'></script>
+
+    <!-- phosphor js -->
+    <script src='{% static "assets/vendor/phosphor/phosphor.js" %}'></script>
+
+    <!-- Glight js -->
+    <script src='{% static "assets/vendor/glightbox/glightbox.min.js" %}'></script>
+
+    <!-- filepond -->
+    <script src='{% static "assets/vendor/filepond/file-encode.min.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/validate-size.min.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/validate-type.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/exif-orientation.min.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/image-preview.min.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/filepond.min.js" %}'></script>
+    <script src='{% static "assets/vendor/filepond/fa_ir.js" %}'></script>
+
+    <!-- slick-file -->
+    <script src='{% static "assets/vendor/slick/slick.min.js" %}'></script>
+    <script src='{% static "assets/vendor/shepherdjs/shepherd.js" %}'></script>
+
+    <!-- js -->
+    <script src='{% static "assets/js/profile.js" %}'></script>
+
+    <!-- App js-->
+    <script src='{% static "assets/js/script.js" %}'></script>
+
+    <!-- Customizer js-->
+    <script src='{% static "assets/js/customizer.js" %}'></script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-12 col-md-10 col-lg-8">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <h4 class="fw-bold text-center mb-4">
+                            پروفایل من
+                        </h4>
+
+
+                        <form
+                                method="POST"
+                                enctype="multipart/form-data"
+                        >
+
+                            {% csrf_token %}
+                            <div class="profile-picture-wrapper">
+
+                                {% if user.picture %}
+                                    <img
+                                            src="{{ user.picture.url }}"
+                                            class="profile-picture"
+                                            id="profilePreview"
+                                            alt="Profile"
+                                    >
+                                {% else %}
+                                    <img
+                                            src="{% static 'default.png' %}"
+                                            class="profile-picture"
+                                            id="profilePreview"
+                                            alt="Profile"
+                                    >
+                                {% endif %}
+
+                                <!-- خود input مخفی می‌شود -->
+                                <div class="d-none">
+                                    {{ profile_form.picture }}
+                                </div>
+
+                                <!-- دکمه انتخاب عکس -->
+                                <label for="id_picture" class="picture-button">
+                                    +
+                                </label>
+
+
+                            </div>
+
+                            {% if profile_form.picture.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in profile_form.picture.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        نام
+                                    </label>
+
+                                    {{ profile_form.first_name }}
+                                    {% if profile_form.first_name.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in profile_form.first_name.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        نام خانوادگی
+                                    </label>
+
+                                    {{ profile_form.last_name }}
+                                    {% if profile_form.last_name.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in profile_form.last_name.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        نام کاربری
+                                    </label>
+
+                                    {{ profile_form.username }}
+                                    {% if profile_form.username.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in profile_form.username.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        ایمیل
+                                    </label>
+
+                                    {{ profile_form.email }}
+                                    {% if profile_form.email.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in profile_form.email.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        شماره تلفن
+                                    </label>
+
+                                    <input type="number" placeholder={{ request.user.phone_number }} class="form-control" readonly>
+
+
+
+                                </div>
+
+
+
+                                {% if profile_form.non_field_errors %}
+                                    <div class="col-md-6 mb-3">
+                                        <div class="text-danger mt-1">
+                                            {% for error in profile_form.non_field_errors.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <div class="text-end mt-3">
+
+                                <button
+                                        type="submit"
+                                        name="update_profile"
+                                        class="btn btn-primary px-4"
+                                >
+
+                                    <i class="ti ti-device-floppy"></i>
+
+                                    ذخیره تغییرات
+
+                                </button>
+
+                            </div>
+
+
+                        </form>
+                        <hr>
+                        <form
+                                method="POST"
+                        >
+
+                            {% csrf_token %}
+                            <div class="row">
+{#                                <div class="col-md-6 mb-3">#}
+{##}
+{#                                    <label class="form-label">#}
+{#                                        رمز عبور فعلی#}
+{#                                    </label>#}
+{##}
+{#                                    {{ password_form.old_password }}#}
+{#                                    {% if password_form.old_password.errors %}#}
+{#                                        <div class="text-danger mt-1">#}
+{#                                            {% for error in password_form.old_password.errors %}#}
+{#                                                <small>{{ error }}</small>#}
+{#                                            {% endfor %}#}
+{#                                        </div>#}
+{##}
+{#                                    {% endif %}#}
+{##}
+{##}
+{#                                </div>#}
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        رمز عبور جدید
+                                    </label>
+
+                                    {{ password_form.new_password1 }}
+                                    {% if password_form.new_password1.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in password_form.new_password1.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        تکرار رمز عبور جدید
+                                    </label>
+
+                                    {{ password_form.new_password2 }}
+                                    {% if password_form.new_password2.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in password_form.new_password2.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+                                {% if password_form.non_field_errors %}
+                                    <div class="col-md-6 mb-3">
+                                        <div class="text-danger mt-1">
+                                            {% for error in password_form.non_field_errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="text-end mt-3">
+
+                                <button
+                                        type="submit"
+                                        name="change_password"
+                                        class="btn btn-primary px-4"
+                                >
+
+                                    تغییر رمز عبور
+
+                                </button>
+
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+

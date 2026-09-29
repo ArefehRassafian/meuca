@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    ثبت سفارش | میوکا
+{% endblock %}
+
+{% block css %}
+
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Simple bar-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+{% endblock %}
+
+{% block js %}
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- checkout js -->
+    <script src="{% static 'assets/js/checkout.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="checkout-tabs-step">
+
+                                        <div class="tab checkout-current-step d-flex" data-tab="tab-2">
+                                            <div class="tabs-steps">
+                                                <i class="ti ti-disc"></i>
+                                            </div>
+
+                                            <div class="px-2">
+                                                <h6 class="mb-0"> آدرس </h6>
+                                                <span class="text-secondary">مرحله 1</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab d-flex" data-tab="tab-3">
+
+                                            <div class="tabs-steps">
+                                                <i class="ti ti-user-plus"></i>
+                                            </div>
+
+                                            <div class="px-2">
+                                                <h6 class="mb-0"> تکمیل اطلاعات </h6>
+                                                <span class="text-secondary">مرحله 2</span>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab d-flex" data-tab="tab-4">
+
+                                            <div class="tabs-steps">
+                                                <i class="ti ti-currency-dollar"></i>
+                                            </div>
+                                            <div class="px-2">
+                                                <h6 class="mb-0"> بازبینی </h6>
+                                                <span class="text-secondary">مرحله 3</span>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="checkout-content-list">
+
+
+                                        <div class="tabs-contents checkout-current-step" id="tab-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="tab-heading mb-3">آدرس شما</h5>
+                                                </div>
+                                                {% if error %}
+                                                    <div class="alert alert-danger">
+                                                        <div>{{ error }}</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if form1.name.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {% for error in form1.name.errors %}
+                                                            <div>{{ error }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if form1.address.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {% for error in form1.address.errors %}
+                                                            <div>{{ error }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if form1.province.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {% for error in form1.province.errors %}
+                                                            <div>{{ error }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if form1.city.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {% for error in form1.city.errors %}
+                                                            <div>{{ error }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if form1.postal_code.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {% for error in form1.postal_code.errors %}
+                                                            <div>{{ error }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+
+
+                                                {% for add in addresses %}
+                                                    <div class="col-md-6 col-xl-4">
+                                                        <div class="card shadow-none">
+                                                            <div class="card-body address-content">
+                                                                <div class="">
+                                                                    <label class="check-box">
+                                                                        <input name="address_id" type="radio"
+                                                                               value={{ add.id }}>
+                                                                        <span
+                                                                                class="radiomark outline-secondary"></span>
+
+                                                                        <span class="fs-6 tab-heading">{{ add.name }}</span>
+                                                                    </label>
+                                                                </div>
+                                                                <div>
+                                                                    <p class="text-muted"> {{ add.city }}</p>
+                                                                    <p>{{ add.address |slice:":20" }}</p>
+                                                                </div>
+                                                                <a href="{% url 'orders_cart:delete_address' add.id %}"><i class="ti ti-trash"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="col-md-6 col-xl-4">
+                                                    <div class="card equal-card shadow-none">
+                                                        <div class="card-body added-content">
+                                                            <a class="link-primary" data-bs-target="#staticBackdrop"
+                                                               data-bs-toggle="modal" role="button">
+                                                                <i class="ti ti-plus"></i> افزودن آدرس جدید
+
+                                                            </a>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="tabs-contents" id="tab-3">
+                                            <div class="row">
+
+                                                <div class="col-12">
+
+                                                    {% if form2.receiver_name.errors %}
+                                                        <div class="alert alert-danger">
+                                                            {% for error in form2.receiver_name.errors %}
+                                                                <div>{{ error }}</div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form2.receiver_phone.errors %}
+                                                        <div class="alert alert-danger">
+                                                            {% for error in form2.receiver_phone.errors %}
+                                                                <div>{{ error }}</div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form2.email.errors %}
+                                                        <div class="alert alert-danger">
+                                                            {% for error in form2.email.errors %}
+                                                                <div>{{ error }}</div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+
+
+                                                    <div class="card shadow-none">
+                                                        <div class="card-body select-content ">
+
+                                                            <div>
+                                                                <form class="app-form">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"
+                                                                                       for="{{ form2.receiver_name.id_for_label }}">نام آدرس </label>
+                                                                                {{ form2.receiver_name }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"
+                                                                                       for="{{ form2.receiver_phone.id_for_label }}">تلفن گیرنده </label>
+                                                                                {{ form2.receiver_phone }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"
+                                                                                       for="{{ form2.email.id_for_label }}">ایمیل </label>
+                                                                                {{ form2.email }}
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="tabs-contents" id="tab-4">
+                                            <div class="row">
+                                                <div class="col-md-3 col-xl-4">
+                                                    <div class="row">
+                                                        {% for item in cart %}
+                                                        <div class="col-6">
+                                                            <img alt="توضیحات تصویر" class="img-fluid b-r-20 mb-2"
+                                                                 src="{{ item.image }}">
+                                                        </div>
+                                                        {% endfor %}
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 col-xl-8">
+                                                    <div class="row">
+
+
+                                                        <div class="col-12">
+
+                                                            <div>
+                                                                <h6 class="tab-heading">محصولات</h6>
+                                                                <div class="accordion app-accordion  accordion-flush accordion-secondary app-accordion-plus"
+                                                                     id="nestingExample">
+                                                                    {% for item in cart %}
+                                                                    <div class="accordion-item">
+                                                                        <h2 class="accordion-header">
+                                                                            <button aria-expanded="true"
+                                                                                    class="accordion-button"
+                                                                                    data-bs-target="#nestingcollapseOne"
+                                                                                    data-bs-toggle="collapse"
+                                                                                    type="button">{{ item.name }}
+                                                                            </button>
+                                                                        </h2>
+                                                                        <div class="accordion-collapse collapse show"
+                                                                             data-bs-parent="#nestingExample"
+                                                                             id="nestingcollapseOne">
+                                                                            <div class="accordion-body">
+                                                                                <p><span
+                                                                                        class="text-secondary f-w-500">تعداد</span>
+                                                                                    :{{ item.quantity }}</p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endfor %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+
+
+                                    <div class="pricing-details">
+
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">جمع جزء</th>
+                                                <th class="text-end" scope="col">{{ cart_total_with_discount }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>مالیات</td>
+                                                <td class="text-end">10%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>هزینه ارسال &amp;</td>
+                                                <td class="text-end">50000</td>
+                                            </tr>
+
+                                            </tbody>
+
+                                        </table>
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>کل</th>
+                                                <th class="text-end">{{ final_price }}</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                        <button class="btn btn-primary w-100" name="payment"
+                                                type="submit">ثبت سفارش و پرداخت
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+    <!-- Modal -->
+    <div aria-hidden="true"
+         aria-labelledby="staticBackdropLabel"
+         class="modal fade" data-bs-backdrop="static"
+         data-bs-keyboard="false" id="staticBackdrop"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"
+                        id="staticBackdropLabel">افزودن آدرس
+                    </h1>
+                    <button aria-label="بستن"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            type="button"></button>
+                </div>
+                <form class="app-form" method="post">
+                    {% csrf_token %}
+                    {% if form1.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form1.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+
+
+                    <div class="modal-body">
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label"
+                                       for="{{ form1.name.id_for_label }}">نام </label>
+                                {{ form1.name }}
+
+
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"
+                                       for="{{ form1.address.id_for_label }}">آدرس
+                                    کامل</label>
+                                {{ form1.address }}
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"
+                                       for="{{ form1.province.id_for_label }}">استان </label>
+                                {{ form1.province }}
+
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label"
+                                       for="{{ form1.city.id_for_label }}">شهر </label>
+                                {{ form1.city }}
+
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label"
+                                       for="{{ form1.postal_code.id_for_label }}">کدپستی </label>
+                                {{ form1.postal_code }}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary"
+                                type="submit" name="address_form">افزودن
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

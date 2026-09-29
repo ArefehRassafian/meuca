@@ -1,0 +1,153 @@
+{% load static %}
+<!-- Menu Navigation starts -->
+<nav>
+    <div class="app-logo">
+        <divc>
+
+            <div style="width: 70%; max-width: 150px; overflow: hidden; margin: 0 auto;">
+                <img
+                        alt="لوگو"
+                        class="img-fluid d-block mx-auto"
+                        src='{% static "assets/images/logo/1.png" %}'
+                        style="width: 100%; height: auto; transform: scale(1.8); object-fit: contain;"
+                >
+            </div>
+
+        </divc>
+
+        <span class="bg-light-primary toggle-semi-nav d-flex-center">
+                    <i class="ti ti-chevron-left"></i>
+                </span>
+
+        {% if user.is_authenticated %}
+            <div class="d-flex align-items-center nav-profile p-3">
+                        <span class="h-45 w-45 d-flex-center b-r-10 position-relative bg-danger m-auto">
+                            {% if user.picture %}
+                                <img alt="آواتار" class="img-fluid b-r-10 h-100 w-100 object-fit-cover"
+                                     src='{{ user.picture.url }}'>
+                            {% else %}
+                                <img alt="آواتار" class="img-fluid b-r-10 h-100 w-100 object-fit-cover"
+                                     src='{% static 'default.png' %}' width=100%>
+                            {% endif %}
+                            <span
+                                    class="position-absolute top-0 start-0 p-1 bg-primary border border-light rounded-circle"></span>
+                        </span>
+                <div class="flex-grow-1 ps-2">
+                    {% if user.first_name or user.last_name %}
+                        <a href="{% url 'accounts:profile' %}"><h6
+                                class="text-primary mb-0">{{ user.first_name }} {{ user.last_name }}</h6></a>
+                    {% else %}
+                        <a href="{% url 'accounts:profile' %}"><h6 class="text-primary mb-0">{{ user.username }}</h6>
+                        </a>
+                    {% endif %}
+                    <p class="text-muted f-s-12 mb-0">
+                        {% if user.is_manager or user.is_superuser %}
+                            مدیر
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <div>
+                    <a href="{% url 'accounts:signout' %}">
+                        <i class="ti ti-logout"></i>
+                    </a>
+                </div>
+
+            </div>
+
+
+        {% endif %}
+    </div>
+    <div class="app-nav" id="app-simple-bar">
+
+        <ul class="main-nav p-0 mt-2">
+            <!-- ورود -->
+            {% if not user.is_authenticated %}
+                <hr>
+                <li class="no-sub">
+
+                    <a href="{% url 'accounts:login' %}">
+                        <i class="ti ti-login"></i>
+                        <span>ورود</span>
+
+                    </a>
+
+                </li>
+            {% endif %}
+
+
+
+            <!-- خانه -->
+            <li class="no-sub">
+
+                <a href="{% url 'products:without_entering' %}">
+                    <i class="ti ti-home"></i>
+                    <span>خانه</span>
+                </a>
+            </li>
+
+
+            <!-- تخفیف شاپ-->
+            <li class="no-sub">
+
+                <a href={% url 'products:product_list' %}>
+                    <i class="ti ti-discount-2"></i>
+                    <span> میوکا شاپ </span>
+                </a>
+            </li>
+
+
+            <!-- سبد خرید -->
+            <li class="no-sub">
+                <a href={% url 'orders_cart:cart_details' %}>
+                    <i class="ti ti-basket"></i>
+                    <span>سبد خرید</span>
+                </a>
+            </li>
+            <!-- سفارشات -->
+            <li class="no-sub">
+
+                <a href="{% url 'orders_cart:order_list' %}">
+                    <i class="ti ti-shopping-bag"></i>
+                    <span>سفارشات</span>
+                </a>
+            </li>
+            <li class="no-sub">
+
+                <a href="{% url 'main:blog_list' %}">
+                    <i class="ti ti-notebook"></i>
+                    <span>بلاگ</span>
+                </a>
+            </li>
+            <li class="no-sub">
+
+                <a href="{% url 'accounts:rules_and_questions' %}">
+                    <i class="ti ti-question-circle"></i>
+                    <span>قوانین و سوالات</span>
+                </a>
+            </li>
+
+
+            <li class="no-sub">
+                <a href="{% url 'accounts:about_us' %}"
+                   class="d-flex align-items-center flex-grow-1">
+                    <i class="ti ti-info-circle"></i>
+                    <span>درباره ما</span>
+                </a>
+
+            </li>
+
+        </ul>
+
+
+    </div>
+
+    <div class="menu-navs">
+        <span class="menu-previous"><i class="ti ti-chevron-right"></i></span>
+        <span class="menu-next"><i class="ti ti-chevron-left"></i></span>
+    </div>
+
+</nav>
+<!-- Menu Navigation ends -->

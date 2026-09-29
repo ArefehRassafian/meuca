@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+ارتباط با ما | میوکا
+{% endblock %}
+
+{% block css %}
+
+    <!-- Animation css -->
+    <link href='{% static "assets/vendor/animation/animate.min.css"%}' rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!--flag Icon css-->
+    <link href='{% static "assets/vendor/flag-icons-master/flag-icon.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- tabler icons-->
+    <link href='{% static "assets/vendor/tabler-icons/tabler-icons.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- apexcharts css-->
+    <link href='{% static "assets/vendor/apexcharts/apexcharts.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href='{% static "assets/vendor/glightbox/glightbox.min.css"%}' rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href='{% static "assets/vendor/bootstrap/bootstrap.min.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href='{% static "assets/vendor/simplebar/simplebar.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href='{% static "assets/css/style.css"%}' rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href='{% static "assets/css/responsive.css"%}' rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href='{% static "assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/rtl.css"%}'>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+
+            <div class="col-12 col-md-10 col-lg-8">
+
+                <div class="card shadow border-0 rounded-4">
+
+                    <div class="card-body p-4 p-md-5">
+                        {% if state == "ok" %}
+
+                            <h5 class="fw-bold mb-4 text-center">
+                                پیام شما با موفقیت ثبت شد.
+                            </h5>
+                        {% else %}
+                            <h5 class="fw-bold mb-4 text-center">
+                                شما به سقف حداکثر پیام در روز رسیدید.
+                            </h5>
+                        {% endif %}
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block js %}
+        <!-- latest jquery-->
+    <script src='{% static "assets/js/jquery-3.6.3.min.js"%}'></script>
+
+    <!-- Boo'strap js -->
+    <script src='{% static "assets/vendor/bootstrap/bootstrap.bundle.min.js"%}'></script>
+
+    <!-- Simple bar js-->
+    <script src='{% static "assets/vendor/simplebar/simplebar.js"%}'></script>
+
+    <!-- phosphor js -->
+    <script src='{% static "assets/vendor/phosphor/phosphor.js"%}' ></script>
+
+    <!-- Glight js -->
+    <script src='{% static "assets/vendor/glightbox/glightbox.min.js"%}'></script>
+
+    <!-- apexcharts-->
+    <script src='{% static "assets/vendor/apexcharts/apexcharts.min.jsv"%}'></script>
+
+    <!-- Customizer js-->
+    <script src='{% static "assets/js/customizer.js"%}'></script>
+
+    <!-- Ecommerce js-->
+    <script src='{% static "assets/js/ecommerce_dashboard.js"%}'></script>
+
+    <!-- App js-->
+    <script src='{% static "assets/js/script.js"%}'></script>
+
+{% endblock %}

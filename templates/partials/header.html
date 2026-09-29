@@ -1,0 +1,112 @@
+{% load static %}
+<!-- Header Section starts -->
+                <header class="header-main">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 col-sm-6 d-flex align-items-center header-left p-0">
+                                <span class="header-toggle ">
+
+
+
+                                    <i class="ph ph-squares-four"></i>
+                                </span>
+
+
+                            </div>
+
+                            <div class="col-4 col-sm-6 d-flex align-items-center justify-content-end header-right p-0">
+
+                                <ul class="d-flex align-items-center">
+
+
+
+                                    <li class="header-cart">
+                                        <a aria-controls="cartcanvasRight"
+                                            class="d-block head-icon position-relative bg-light-dark rounded-circle f-s-22 p-2"
+                                            data-bs-target="#cartcanvasRight" data-bs-toggle="offcanvas" href="#"
+                                            role="button">
+                                            <i class="ph ph-shopping-cart-simple"></i>
+                                            <span
+                                                class="position-absolute translate-middle badge rounded-pill bg-danger badge-notification">{% if quantity != 0 %}{{ quantity }}{% endif %}</span>
+                                        </a>
+                                        <div aria-labelledby="cartcanvasRightLabel"
+                                            class="offcanvas offcanvas-start header-cart-canvas" id="cartcanvasRight"
+                                            tabindex="-1">
+                                            <div class="offcanvas-header">
+                                                <h5 class="offcanvas-title" id="cartcanvasRightLabel">سبد خرید</h5>
+                                                <button aria-label="بستن" class="btn-close" data-bs-dismiss="offcanvas"
+                                                    type="button"></button>
+                                            </div>
+                                            <div class="offcanvas-body app-scroll p-0">
+                                                <div class="head-container">
+                                                    {% for item in cart %}
+                                                    <div class="head-box">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="{{ item.image }}">
+                                                        </span>
+
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="{% url 'products:product_details' item.id %}"
+                                                                target="_blank"> {{ item.name }}
+                                                            </a>
+                                                            <p></p>
+                                                            <small>{{ item.code }}</small>
+
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <a href="{% url 'orders_cart:cart_del' item.id %}"><i class="ph ph-trash f-s-18 text-danger close-btn"></i></a>
+                                                            <p class="text-muted f-w-500 mb-0">{{item.final_price}} {{item.quantity}}x  </p>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+
+                                                    <div class="hidden-massage py-4 px-3">
+
+                                                        <div>
+                                                            <i
+                                                                class="ph-duotone  ph-shopping-bag-open f-s-50 text-primary"></i>
+                                                            <h6 class="mb-0">سبد خرید شما خالی است</h6>
+                                                            <p class="text-secondary mb-0">سفارش خود را ثبت کنید :)</p>
+                                                            <a class="btn btn-light-primary btn-xs mt-2"
+                                                                href="{% url 'products:product_list' %}">خرید کنید</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="offcanvas-footer">
+                                                <div class="head-box-footer p-3">
+                                                    <div class="mb-4">
+                                                        <h6 class="text-muted f-w-600">کل <span
+                                                                class="float-start text-primary">{{ sd }}</span></h6>
+                                                    </div>
+                                                    <div class="header-cart-btn">
+                                                        <a class="btn btn-primary" href="{% url 'orders_cart:cart_details'  %}" role="button"
+                                                            target="_blank">
+                                                            <i class="ti ti-eye"></i> سبد خرید</a>
+                                                        <a class="btn btn-success" href="{% url 'orders_cart:checkout' %}" role="button"
+                                                            target="_blank">پرداخت <i
+                                                                class="ti ti-shopping-cart"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-dark">
+                                        <div class="sun-logo head-icon bg-light-dark rounded-circle f-s-22 p-2">
+                                            <i class="ph ph-moon-stars"></i>
+                                        </div>
+                                        <div class="moon-logo head-icon bg-light-dark rounded-circle f-s-22 p-2">
+                                            <i class="ph ph-sun-dim"></i>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header Section ends -->

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    قوانین و سوالات | میوکا
+{% endblock %}
+
+{% block css %}
+
+    <!-- Animation css -->
+    <link href='{% static "assets/vendor/animation/animate.min.css" %}' rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!--flag Icon css-->
+    <link href='{% static "assets/vendor/flag-icons-master/flag-icon.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- tabler icons-->
+    <link href='{% static "assets/vendor/tabler-icons/tabler-icons.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- apexcharts css-->
+    <link href='{% static "assets/vendor/apexcharts/apexcharts.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href='{% static "assets/vendor/glightbox/glightbox.min.css" %}' rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href='{% static "assets/vendor/bootstrap/bootstrap.min.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href='{% static "assets/vendor/simplebar/simplebar.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href='{% static "assets/css/style.css" %}' rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href='{% static "assets/css/responsive.css" %}' rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href='{% static "assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/css/rtl.css" %}'>
+{% endblock %}
+
+{% block js %}
+    <!-- latest jquery-->
+    <script src='{% static "assets/js/jquery-3.6.3.min.js" %}'></script>
+
+    <!-- Boo'strap js -->
+    <script src='{% static "assets/vendor/bootstrap/bootstrap.bundle.min.js" %}'></script>
+
+    <!-- Simple bar js-->
+    <script src='{% static "assets/vendor/simplebar/simplebar.js" %}'></script>
+
+    <!-- phosphor js -->
+    <script src='{% static "assets/vendor/phosphor/phosphor.js" %}'></script>
+
+    <!-- Glight js -->
+    <script src='{% static "assets/vendor/glightbox/glightbox.min.js" %}'></script>
+
+    <!-- apexcharts-->
+    <script src='{% static "assets/vendor/apexcharts/apexcharts.min.jsv" %}'></script>
+
+    <!-- Customizer js-->
+    <script src='{% static "assets/js/customizer.js" %}'></script>
+
+    <!-- Ecommerce js-->
+    <script src='{% static "assets/js/ecommerce_dashboard.js" %}'></script>
+
+    <!-- App js-->
+    <script src='{% static "assets/js/script.js" %}'></script>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+
+            <!-- Breadcrumb start -->
+            <div class="row m-1">
+                <div class="col-12 ">
+                    <h4 class="main-title text-center">قوانین استفاده</h4>
+
+                </div>
+            </div>
+            <!-- Breadcrumb end -->
+
+            <!-- terms condition start -->
+            <div class="row terms-condition-container">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="text-primary"><i class="ti ti-north-star text-primary ms-2"></i>به
+                                میوکا خوش آمدید</h4>
+                            <div class="mt-4">
+                                {% for rule in setting.rules.all %}
+                                    <p class="text-dark f-s-16 corner-arrow">
+                                        <i class="ti ti-corner-down-left-double text-primary ms-2"></i>
+                                        {{ rule.rule|linebreaksbr}}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Frequently Asked Questions start -->
+    <div class="row faq-accordion mt-5">
+    <div class="faq-heading mb-3">
+        <h3><i class="ti ti-question-circle"></i> پاسخ به سوالات متداول</h3>
+    </div>
+    <div class="col-lg-8 offset-lg-2 mb-3">
+        <div class="accordion app-accordion accordion-primary" id="accordionExample">
+            <div class="accordion-item">
+                {% for question in setting.questions.all %}
+                <h2 class="accordion-header">
+                    <button aria-controls="collapseOne" aria-expanded="true"
+                            class="accordion-button" data-bs-target="#collapseOne"
+                            data-bs-toggle="collapse" type="button">
+                        <i class="ti ti-question-circle ps-2"></i>{{ question.question| linebreaksbr}}
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse show" data-bs-parent="#accordionExample"
+                     id="collapseOne">
+                    <div class="accordion-body">
+                        {{ question.answer |linebreaksbr }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+

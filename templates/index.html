@@ -1,0 +1,382 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+    خانه | میوکا
+{% endblock %}
+
+{% block css %}
+
+
+    {#    |||||||||||||||||||||||||||||||||||||#}
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+    {#    ||||||||||||||||||||||||||||||||||||||||||||||||#}
+
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+    <!-- slick css -->
+    <link href="{% static 'assets/vendor/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/slick/slick-theme.css' %}" rel="stylesheet">
+    <!--font-awesome-css-->
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+
+{% endblock %}
+
+{% block js %}
+    {#    ????????????????????????????//#}
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/js/simplebar.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+    {#////////////////////////////////////////#}
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/js/simplebar.js' %}"></script>
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- slick-file -->
+    <script src="{% static 'assets/vendor/slick/slick.min.js' %}"></script>
+
+    <!--  js -->
+    <script src="{% static 'assets/js/slick.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+    <!--  js -->
+    <script src="{% static 'assets/js/slick.js' %}"></script>
+
+
+
+
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Auto Slider With Indicators start -->
+                <div class="col-md-1 col-xl-12">
+                    <div class="card">
+
+                        <div class="card-body ">
+                            <div class="carousel slide" data-bs-ride="carousel" id="carouselExampleButton">
+                                <div class="carousel-inner">
+                                    {% for item in setting.images.all %}
+                                        <div class="carousel-item active" data-bs-interval="4000">
+                                            <img alt="توضیحات تصویر" class="w-100 d-block object-fit-cover"
+                                                 style="width: 200px;height: 400px;object-fit: cover;"
+                                                 src="{{ item.image.url }}">
+                                        </div>
+                                    {% endfor %}
+
+
+                                </div>
+                                <button class="carousel-control-prev" data-bs-slide="prev"
+                                        data-bs-target="#carouselExampleButton" type="button">
+                                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                                    <span class="visually-hidden">قبل</span>
+                                </button>
+                                <button class="carousel-control-next" data-bs-slide="next"
+                                        data-bs-target="#carouselExampleButton" type="button">
+                                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                                    <span class="visually-hidden">بعد</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- verticall scrollbar strat  -->
+            <div class="row app-slick-sliders">
+                <!-- Multiple Items start  -->
+                <div class="col-md-1 col-xl-12">
+                    <div class="card border-0 shadow-none bg-transparent">
+
+                        <div class="card-body p-0">
+                            <div class="multiple-items app-arrow ">
+                                {% for cat in categories %}
+                                    <a href="{% url 'products:categories_list' cat.id %}">
+                                        <div class="items text-light-dark border border-primary border-2 m-3">
+                                            <img alt="توضیحات تصویر" class="img-fluid rounded"
+                                                 style="width: 200px;height: 100px;object-fit: cover;"
+                                                 src="{{ cat.image.url }}">
+                                        </div>
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row app-slick-sliders">
+                <!-- Multiple Items start  -->
+                <div class="col-md-1 col-xl-12">
+                    <div class="card ">
+                        <div class="card-header">
+                            <a href="{% url 'products:product_list' %}"><h5 class="text-primary">جدیدترین ها</h5></a>
+                        </div>
+                        <div class="card-body">
+                            <div class="multiple-items app-arrow ">
+                                {% for p in products %}
+                                    <a href="{% url 'products:product_details' p.id %}">
+                                        <div class="items text-light-dark border border-primary border-2">
+                                            <img alt="توضیحات تصویر" class="img-fluid rounded"
+                                                 style="width: 150px;height: 150px;object-fit: cover;"
+                                                 src="{{ p.images.all.0.image.url }}">
+                                            <small>{{ p.name|truncatechars:20 }}</small>
+                                            <div>
+                                                {% if p.discount_percent == 0 %}
+
+
+                                                    <small>
+                                                        {{ p.price }}
+                                                    </small>
+
+                                                    <div>تومان</div>
+
+
+
+
+                                                {% else %}
+
+                                                    <small>
+
+
+                                                        {{ p.final_price }}
+
+                                                        <span>
+                                            (<del>{{ p.price }}</del>)
+
+                                        </span>
+                                                    </small>
+                                                    <div class="bold test-light-dark">
+                                                        تومان{{ p.discount_percent }}%تخفیف
+
+
+                                                    </div>
+
+
+
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row app-slick-sliders">
+                <!-- Multiple Items start  -->
+                <div class="col-md-1 col-xl-12">
+                    <div class="card ">
+                        <div class="card-header">
+                            <a href="{% url 'products:discounted_products_list' %}"><h5 class="text-primary">تخفیف
+                                شاپ</h5></a>
+                        </div>
+                        <div class="card-body">
+                            <div class="multiple-items app-arrow ">
+                                {% for p in discounted_products %}
+                                    <a href="{% url 'products:product_details' p.id %}">
+                                        <div class="items text-light-dark border border-primary border-2">
+                                            <img alt="توضیحات تصویر" class="img-fluid rounded"
+                                                 style="width: 150px;height: 150px;object-fit: cover;"
+                                                 src="{{ p.images.all.0.image.url }}">
+                                            <small>{{ p.name|truncatechars:20 }}</small>
+                                            <div>
+                                                  {% if p.discount_percent == 0 %}
+
+
+                                                    <small>
+                                                        {{ p.price }}
+                                                    </small>
+
+                                                    <div>تومان</div>
+
+
+
+
+                                                {% else %}
+
+                                                    <small>
+
+
+                                                        {{ p.final_price }}
+
+                                                        <span>
+                                            (<del>{{ p.price }}</del>)
+
+                                        </span>
+                                                    </small>
+                                                    <div class="bold test-light-dark">
+                                                        تومان{{ p.discount_percent }}%تخفیف
+
+
+                                                    </div>
+
+
+
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </main>
+
+{% endblock %}
+

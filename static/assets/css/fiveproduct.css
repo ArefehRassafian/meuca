@@ -1,0 +1,13 @@
+@media (min-width: 992px) {
+    .col-lg-20 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .col-xxl-20 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}

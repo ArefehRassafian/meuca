@@ -1,0 +1,2336 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <meta content="میوکا" name="description">
+{% endblock %}
+
+{% block title %}
+     میوکا شاپ | میوکا
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'assets/vendor/fontawesome/css/all.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="{% static 'assets/vendor/tabler-icons/tabler-icons.css' %}" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="{% static 'assets/vendor/flag-icons-master/flag-icon.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- nouislider js css -->
+    <link href="{% static 'assets/vendor/nouislider/nouislider.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap css-->
+    <link href="{% static 'assets/vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="{% static 'assets/vendor/simplebar/simplebar.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- apexcharts css-->
+    <link href="{% static 'assets/vendor/apexcharts/apexcharts.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- App css-->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/rtl.css' %}">
+
+{% endblock %}
+
+{% block js %}
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Simple bar js-->
+    <script src="{% static 'assets/vendor/simplebar/simplebar.js' %}"></script>
+
+    <!-- phosphor js -->
+    <script src="{% static 'assets/vendor/phosphor/phosphor.js' %}"></script>
+
+    <!-- nouislider js -->
+    <script src="{% static 'assets/vendor/nouislider/nouislider.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/nouislider/wNumb.min.js' %}"></script>
+
+
+    <!-- js -->
+    <script src="{% static 'assets/js/product.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- Customizer js-->
+    <script src="{% static 'assets/js/customizer.js' %}"></script>
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Body main section starts -->
+    <main>
+        <div class="container-fluid">
+
+
+            <!-- Product start -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div
+                                    class="product-header d-flex justify-content-between gap-3 align-items-center">
+
+                                <div class="d-flex align-items-center">
+                                    <a class="ms-3 toggle-btn d-inline-block d-lg-none" role="button"><i
+                                            class="ti ti-align-justified f-s-24"></i></a>
+                                    <form class="app-form app-icon-form d-inline-block ">
+                                        <div class="position-relative">
+                                            <input aria-label="جستجو" class="form-control"
+                                                   placeholder="جستجو..." type="search" name="search"
+                                                   value="{{ request.GET.search|default:'' }}">
+                                            <input type="hidden" name="order" value="{{ request.GET.order }}">
+                                            {% for cat in selected_categories %}
+                                                <input type="hidden" name="categories" value={{ cat }}>
+                                            {% endfor %}
+
+
+
+                                            <i class="ti ti-search text-dark"></i>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters start -->
+                <div class="col-xxl-3 col-lg-4 product-box productbox">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>فیلتر</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <form method="get">
+                                <div class="accordion accordion-flush app-accordion accordion-light-primary"
+                                     id="accordion-flush-sort-by">
+                                    {% if request.GET.search %}
+                                        <input aria-label="جستجو" class="form-control"
+                                               placeholder="جستجو..." type="hidden" name="search"
+                                               value="{{ request.GET.search|default:'' }}">
+                                    {% endif %}
+
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-heading-two">
+                                            <button aria-controls="collapse_two" aria-expanded="true"
+                                                    class="accordion-button bg-none p-1"
+                                                    data-bs-target="#collapse_two" data-bs-toggle="collapse"
+                                                    type="button">
+                                                <span class="m-0 mt-1">مرتب سازی</span>
+                                            </button>
+                                        </h2>
+                                        <div aria-labelledby="flush-heading-two"
+                                             class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordion-flush-sort-by" id="collapse_two">
+                                            <div>
+
+                                                <label class="check-box m-3">
+                                                    <input name="order" type="radio" value=1
+                                                           {% if request.GET.order == none or request.GET.order == "1" %}checked{% endif %}>
+                                                    <span class="radiomark outline-secondary"></span>
+                                                    <span class="text-secondary">جدیدترین</span>
+                                                </label>
+                                                <label class="check-box m-3">
+                                                    <input name="order" type="radio" value=2
+                                                           {% if request.GET.order == "2" %}checked{% endif %}>
+                                                    <span class="radiomark outline-secondary"></span>
+                                                    <span class="text-secondary">قیمت: صعودی</span>
+                                                </label>
+                                                <label class="check-box m-3">
+                                                    <input name="order" type="radio" value=3
+                                                           {% if request.GET.order == "3" %}checked{% endif %}>
+                                                    <span class="radiomark outline-secondary"></span>
+                                                    <span class="text-secondary">قیمت: نزولی</span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-heading-three">
+                                            <button aria-controls="collapse_three" aria-expanded="false"
+                                                    class="accordion-button bg-none p-1"
+                                                    data-bs-target="#collapse_three" data-bs-toggle="collapse"
+                                                    type="button">
+                                                <span class="m-0 mt-1">دسته بندی ها</span>
+                                            </button>
+                                        </h2>
+                                        <div aria-labelledby="flush-heading-three"
+                                             class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordion-flush-sort-by" id="collapse_three">
+                                            <div class="accordion-body p-2">
+                                                {% for cat in categories %}
+                                                    <div class="p-2 d-flex align-items-center gap-2">
+                                                        <label class="check-box">
+                                                            <input type="checkbox" name="categories"
+                                                                   value={{ cat.id }}  {% if cat.id in selected_categories %} checked {% endif %}>
+                                                            <span class="checkmark outline-secondary me-2"></span>
+                                                        </label>
+                                                        <span class="text-secondary">{{ cat.name }}</span>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div>
+
+                                    <div class="text-end m-3">
+                                        <a class="btn btn-sm btn-primary" href="{% url 'products:product_list' %}"
+                                           role="button">پاک کردن
+                                            همه</a>
+                                        <button class="btn btn-sm btn-secondary" type="submit">اعمال</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Filters end -->
+
+                <!-- product box start -->
+                <div class="col-xxl-9 col-lg-8">
+                    <div class="product-wrapper-grid">
+                        <div class="row">
+
+                            <!-- Product box -->
+                            {% for product in ps %}
+                                <div class="col-xxl-3 col-md-4 col-sm-6 d-flex">
+                                    <div class="card overflow-hidden w-100 h-100">
+                                        <div class="card-body p-0">
+                                            <div class="product-content-box">
+                                                <div class="product-grid">
+                                                    <div class="product-image">
+                                                        <a class="image" href="#">
+
+                                                            <img alt="توضیحات تصویر" class="pic-1"
+                                                                 style="height: 200px;overflow: hidden"
+                                                                 src={{ product.images.all.0.image.url }}>
+
+                                                            <img alt="توضیحات تصویر" class="images_box"
+                                                                 style="height: 200px;overflow: hidden"
+                                                                 src={{ product.images.all.1.image.url }}>
+                                                        </a>
+                                                        <ul class="product-links">
+
+                                                            <li><a class="bg-primary h-30 w-30 d-flex-center b-r-20"
+                                                                   href="{% url 'orders_cart:cart_add' product.id %}"><i
+                                                                    class="ti ti-shopping-cart f-s-18 text-light"></i></a>
+                                                            </li>
+                                                            <li><a class="bg-success h-30 w-30 d-flex-center b-r-20"
+                                                                   href={% url 'products:product_details' product.id %}><i
+                                                                    class="ti ti-eye f-s-18 text-light"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                                <div class="p-3">
+                                                    <div
+                                                            class="d-flex justify-content-between align-items-center">
+                                                        <a class="m-0 f-s-20 f-w-500"
+                                                           href={% url 'products:product_details' product.id %}><small>{{ product.name|truncatechars:20  }}</small></a>
+
+                                                    </div>
+
+                                                    <div class="pricing-box">
+
+                                                            {% if product.discount_percent == 0 %}
+                                                                <h6>{{ product.price }} تومان</h6>
+                                                            {% else %}
+                                                                <h6> {{ product.final_price }}تومان  <span>(<del>{{ product.price }}</del>)</span><span
+                                                                        class="text-success me-2">{{ product.discount_percent }}%تخفیف</span>
+                                                                </h6>
+                                                            {% endif %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Product box -->
+                            {% empty %}
+                                <div class="col-12">
+
+                                    <div class="no-events">
+
+                                        هیچ کالایی پیدا نشد.
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                            {% if ps.has_other_pages %}
+
+                                <ul class="page-num d-flex pagination" style="gap:15px;" dir="ltr">
+                                    {% if ps.has_previous %}
+                                        <li><a href="?page=
+
+                                                {{ ps.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">
+                                            <i
+                                                    class="fa fa-angle-double-left"></i></a></li>
+                                    {% endif %}
+                                    {% for i in ps.paginator.page_range %}
+                                        {% if ps.number == i %}
+                                            <li class="active"><a href="?page=
+
+                                                    {{ i }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">{{ i }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li><a href="?page=
+
+                                                    {{ i }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}"> {{ i }} </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if ps.has_next %}
+                                        <li><a href="?page=
+
+                                                {{ ps.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search|default:'' }}{% endif %}{% for cat in selected_categories %}&categories={{ cat }}{% endfor %}">
+                                            <i
+                                                    class="fa fa-angle-double-right"></i></a></li>
+                                    {% endif %}
+
+                                </ul>
+
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- product box end -->
+            </div>
+            <!-- Product end -->
+        </div>
+    </main>
+
+
+{% endblock %}
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="قالب مدیریتی چند منظوره کای ادمین" name="description">
+    <meta content="قالب مدیریتی چند منظوره کای ادمین" name="keywords">
+    <meta content="کای ادمین" name="author">
+    <link href="assets/images/logo/favicon.png" rel="icon" type="image/x-icon">
+    <link href="assets/images/logo/favicon.png" rel="shortcut icon" type="image/x-icon">
+
+    <title>بلاگ | کای ادمین - قالب مدیریتی چند منظوره</title>
+
+    <!--font-awesome-css-->
+    <link href="assets/vendor/fontawesome/css/all.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!-- tabler icons-->
+    <link href="assets/vendor/tabler-icons/tabler-icons.css" rel="stylesheet" type="text/css">
+
+    <!--flag Icon css-->
+    <link href="assets/vendor/flag-icons-master/flag-icon.css" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap css-->
+    <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- simplebar css-->
+    <link href="assets/vendor/simplebar/simplebar.css" rel="stylesheet" type="text/css">
+
+    <!-- glight css -->
+    <link href="assets/vendor/glightbox/glightbox.min.css" rel="stylesheet">
+
+    <!-- slick css -->
+    <link href="assets/vendor/slick/slick.css" rel="stylesheet">
+    <link href="assets/vendor/slick/slick-theme.css" rel="stylesheet">
+
+    <!-- App css-->
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+
+    <!-- Responsive css-->
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+</head>
+
+<body class="rtl">
+    <div class="app-wrapper">
+
+        <div class="loader-wrapper">
+            <div class="loader_24"></div>
+        </div>
+
+        <!-- Menu Navigation starts -->
+        <nav>
+            <div class="app-logo">
+                <a class="logo d-inline-block" href="index.html">
+                    <img alt="توضیحات تصویر" src="assets/images/logo/1.png">
+                </a>
+
+                <span class="bg-light-primary toggle-semi-nav d-flex-center">
+                    <i class="ti ti-chevron-left"></i>
+                </span>
+
+                <div class="d-flex align-items-center nav-profile p-3">
+                    <span class="h-45 w-45 d-flex-center b-r-10 position-relative bg-danger m-auto">
+                        <img alt="آواتار" class="img-fluid b-r-10" src="assets/images/avatar/woman.jpg">
+                        <span
+                            class="position-absolute top-0 start-0 p-1 bg-success border border-light rounded-circle"></span>
+                    </span>
+                    <div class="flex-grow-1 ps-2">
+                        <h6 class="text-primary mb-0">مینا نیما</h6>
+                        <p class="text-muted f-s-12 mb-0">توسعه دهنده وب</p>
+                    </div>
+
+
+                    <div class="dropdown profile-menu-dropdown">
+                        <a aria-expanded="false" data-bs-auto-close="true" data-bs-placement="top"
+                            data-bs-toggle="dropdown" role="button">
+                            <i class="ti ti-settings fs-5"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <a class="f-w-500" href="profile.html" target="_blank">
+                                    <i class="ph-duotone  ph-user-circle ps-1 f-s-20"></i> جزئیات پروفایل
+                                </a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class="f-w-500" href="setting.html" target="_blank">
+                                    <i class="ph-duotone  ph-gear ps-1 f-s-20"></i> تنظیمات
+                                </a>
+                            </li>
+                            <li class="dropdown-item">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <a class="f-w-500" href="#">
+                                            <i class="ph-duotone  ph-detective ps-1 f-s-20"></i> ناشناس
+                                        </a>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input form-check-primary" id="incognitoSwitch"
+                                                type="checkbox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class="mb-0 text-secondary f-w-500" href="sign_up.html" target="_blank">
+                                    <i class="ph-bold  ph-plus ps-1 f-s-20"></i> افزودن حساب
+                                </a>
+                            </li>
+
+                            <li class="app-divider-v dotted py-1"></li>
+
+                            <li class="dropdown-item">
+                                <a class="mb-0 text-danger" href="sign_in.html" target="_blank">
+                                    <i class="ph-duotone  ph-sign-out ps-1 f-s-20"></i> خروج
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="app-nav" id="app-simple-bar">
+                <ul class="main-nav p-0 mt-2">
+                    <li class="menu-title">
+                        <span>داشبورد</span>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#dashboard">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2 12.284L10.9545 3.32951C11.3938 2.89017 12.1062 2.89016 12.5455 3.3295L21.5 12.284M4.25 10.034V20.159C4.25 20.7803 4.75368 21.284 5.375 21.284H9.5V16.409C9.5 15.7877 10.0037 15.284 10.625 15.284H12.875C13.4963 15.284 14 15.7877 14 16.409V21.284H18.125C18.7463 21.284 19.25 20.7803 19.25 20.159V10.034M8 21.284H16.25"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>داشبورد<span
+                                class="badge bg-danger  badge-dashboard badge-notification ms-2">جدید</span>
+
+                        </a>
+                        <ul class="collapse" id="dashboard">
+                            <li><a href="index.html">فروشگاهی</a></li>
+                            <li><a href="project_dashboard.html">پروژه</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#apps">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_21)">
+                                    <path
+                                        d="M6.42857 9.75L2.25 12L6.42857 14.25M6.42857 9.75L12 12.75L17.5714 9.75M6.42857 9.75L2.25 7.5L12 2.25L21.75 7.5L17.5714 9.75M17.5714 9.75L21.75 12L17.5714 14.25M17.5714 14.25L21.75 16.5L12 21.75L2.25 16.5L6.42857 14.25M17.5714 14.25L12 17.25L6.42857 14.25"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_21">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>برنامه ها</a>
+                        <ul class="collapse" id="apps">
+                            <li><a href="calendar.html">تقویم</a></li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#Profile-page">پروفایل</a>
+                                <ul class="collapse" id="Profile-page">
+                                    <li><a href="profile.html">پروفایل</a></li>
+                                    <li><a href="setting.html">تنظیمات</a></li>
+                                </ul>
+                            </li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#projects-page">صفحات پروژه</a>
+                                <ul class="collapse" id="projects-page">
+                                    <li><a href="project_app.html">پروژه ها</a></li>
+                                    <li><a href="project_details.html">جزئیات پروژه</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="to_do.html">لیست انجام</a></li>
+                            <li><a href="team.html">تیم</a></li>
+                            <li><a href="api.html">ای پی آی</a></li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#ticket-page">پشتیبانی</a>
+                                <ul class="collapse" id="ticket-page">
+                                    <li><a href="ticket.html">تیکت</a></li>
+                                    <li><a href="ticket_details.html">جزئیات تیکت</a></li>
+                                </ul>
+                            </li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#email-page">صفحات ایمیل</a>
+                                <ul class="collapse" id="email-page">
+                                    <li><a href="email.html"> ایمیل</a></li>
+                                    <li><a href="read_email.html">جزئیات ایمیل</a></li>
+                                </ul>
+                            </li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#e-shop">فروشگاهی</a>
+                                <ul class="collapse" id="e-shop">
+                                    <li><a href="cart.html">سبد خرید</a></li>
+                                    <li><a href="product.html">محصول</a></li>
+                                    <li><a href="add_product.html">افزودن محصول</a></li>
+                                    <li><a href="product_details.html">جزئیات محصول</a></li>
+                                    <li><a href="product_list.html">لیست محصولات</a></li>
+                                    <li><a href="orders.html">سفارشات</a></li>
+                                    <li><a href="orders_details.html">جزئیات سفارش</a></li>
+                                    <li><a href="orders_list.html">لیست سفارشات</a></li>
+                                    <li><a href="checkout.html">پرداخت </a></li>
+                                    <li><a href="wishlist.html">لیست علاقه</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="invoice.html">فاکتور</a></li>
+                            <li><a href="chat.html">چت</a></li>
+                            <li><a href="file_manager.html">مدیریت فایل</a></li>
+                            <li><a href="bookmark.html">نشانه گذاری</a></li>
+                            <li><a href="kanban_board.html">صفحه کانبان</a></li>
+                            <li><a href="timeline.html">تایم لاین</a></li>
+                            <li><a href="faq.html">سوالات متداول</a></li>
+                            <li><a href="pricing.html">قیمت ها</a></li>
+                            <li><a href="gallery.html">گالری</a></li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#blog-page">صفحات بلاگ</a>
+                                <ul class="collapse" id="blog-page">
+                                    <li><a href="blog.html">بلاگ</a></li>
+                                    <li><a href="blog_read_more.html">جزئیات بلاگ</a></li>
+                                    <li><a href="add_blog.html">افزودن بلاگ</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="no-sub">
+                        <a href="widget.html">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_22)">
+                                    <path
+                                        d="M3.75 6C3.75 4.75736 4.75736 3.75 6 3.75H8.25C9.49264 3.75 10.5 4.75736 10.5 6V8.25C10.5 9.49264 9.49264 10.5 8.25 10.5H6C4.75736 10.5 3.75 9.49264 3.75 8.25V6Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M3.75 15.75C3.75 14.5074 4.75736 13.5 6 13.5H8.25C9.49264 13.5 10.5 14.5074 10.5 15.75V18C10.5 19.2426 9.49264 20.25 8.25 20.25H6C4.75736 20.25 3.75 19.2426 3.75 18V15.75Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M13.5 6C13.5 4.75736 14.5074 3.75 15.75 3.75H18C19.2426 3.75 20.25 4.75736 20.25 6V8.25C20.25 9.49264 19.2426 10.5 18 10.5H15.75C14.5074 10.5 13.5 9.49264 13.5 8.25V6Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M13.5 15.75C13.5 14.5074 14.5074 13.5 15.75 13.5H18C19.2426 13.5 20.25 14.5074 20.25 15.75V18C20.25 19.2426 19.2426 20.25 18 20.25H15.75C14.5074 20.25 13.5 19.2426 13.5 18V15.75Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_22">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>ویجت ها</a>
+                    </li>
+
+                    <li class="menu-title"><span>کامپوننت</span></li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#ui-kits">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20.25 14.1499V18.4C20.25 19.4944 19.4631 20.4359 18.3782 20.58C16.2915 20.857 14.1624 21 12 21C9.83757 21 7.70854 20.857 5.62185 20.58C4.5369 20.4359 3.75 19.4944 3.75 18.4V14.1499M20.25 14.1499C20.7219 13.7476 21 13.1389 21 12.4889V8.70569C21 7.62475 20.2321 6.69082 19.1631 6.53086C18.0377 6.36247 16.8995 6.23315 15.75 6.14432M20.25 14.1499C20.0564 14.315 19.8302 14.4453 19.5771 14.5294C17.1953 15.3212 14.6477 17.5 12 17.5C9.35227 17.5 6.80469 15.3212 4.42289 14.5294C4.16984 14.4452 3.94361 14.3149 3.75 14.1499M3.75 14.1499C3.27808 13.7476 3 13.1389 3 12.4889V8.70569C3 7.62475 3.7679 6.69082 4.83694 6.53086C5.96233 6.36247 7.10049 6.23315 8.25 6.14432M15.75 6.14432V5.25C15.75 4.00736 14.7426 3 13.5 3H10.5C9.25736 3 8.25 4.00736 8.25 5.25V6.14432M15.75 6.14432C14.5126 6.0487 13.262 6 12 6C10.738 6 9.48744 6.0487 8.25 6.14432"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>کیت های یوآی</a>
+                        <ul class="collapse" id="ui-kits">
+                            <li><a href="cheatsheet.html">برگه تقلب</a></li>
+                            <li><a href="alert.html">هشدار</a></li>
+                            <li><a href="badges.html">نشان ها(بج)</a></li>
+                            <li><a href="buttons.html">دکمه ها</a></li>
+                            <li><a href="cards.html">کارت ها</a></li>
+                            <li><a href="dropdown.html">دراپ داون</a></li>
+                            <li><a href="grid.html">شبکه (گرید)</a></li>
+                            <li><a href="avatar.html">آواتار</a></li>
+                            <li><a href="tabs.html">تب ها</a></li>
+                            <li><a href="accordions.html">اکوردیون</a></li>
+                            <li><a href="progress.html">پیشرفت</a></li>
+                            <li><a href="notifications.html">اعلان ها</a></li>
+                            <li><a href="list.html">لیست ها</a></li>
+                            <li><a href="helper_classes.html">کلاس های کمکی</a></li>
+                            <li><a href="background.html">پس زمینه</a></li>
+                            <li><a href="divider.html">جداکننده</a></li>
+                            <li><a href="ribbons.html">روبان ها</a></li>
+                            <li><a href="editor.html">ویرایشگر </a></li>
+                            <li><a href="collapse.html">بازشونده</a></li>
+                            <li><a href="footer-page.html">پاصفحه</a></li>
+                            <li><a href="shadow.html">سایه</a></li>
+                            <li><a href="wrapper.html">رپر (Wrapper)</a></li>
+                            <li><a href="bullet.html">لیست گلوله ای</a></li>
+                            <li><a href="placeholder.html">جایگذار</a></li>
+                            <li><a href="alignment.html">ترازبندی ها</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#advance-ui">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20.25 14.1499V18.4C20.25 19.4944 19.4631 20.4359 18.3782 20.58C16.2915 20.857 14.1624 21 12 21C9.83757 21 7.70854 20.857 5.62185 20.58C4.5369 20.4359 3.75 19.4944 3.75 18.4V14.1499M20.25 14.1499C20.7219 13.7476 21 13.1389 21 12.4889V8.70569C21 7.62475 20.2321 6.69082 19.1631 6.53086C18.0377 6.36247 16.8995 6.23315 15.75 6.14432M20.25 14.1499C20.0564 14.315 19.8302 14.4453 19.5771 14.5294C17.1953 15.3212 14.6477 17.5 12 17.5C9.35227 17.5 6.80469 15.3212 4.42289 14.5294C4.16984 14.4452 3.94361 14.3149 3.75 14.1499M3.75 14.1499C3.27808 13.7476 3 13.1389 3 12.4889V8.70569C3 7.62475 3.7679 6.69082 4.83694 6.53086C5.96233 6.36247 7.10049 6.23315 8.25 6.14432M15.75 6.14432V5.25C15.75 4.00736 14.7426 3 13.5 3H10.5C9.25736 3 8.25 4.00736 8.25 5.25V6.14432M15.75 6.14432C14.5126 6.0487 13.262 6 12 6C10.738 6 9.48744 6.0487 8.25 6.14432"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+
+                            </svg>یوآی پیشرفته<span class=" badge rounded-pill bg-warning badge-notification ms-2">
+                                12+
+                                <span class="visually-hidden">پیام های جدید</span>
+                            </span>
+                        </a>
+                        <ul class="collapse" id="advance-ui">
+                            <li><a href="modals.html">مودال ها</a></li>
+                            <li><a href="offcanvas.html">سوئیچ دیالوگ</a></li>
+                            <li><a href="sweetalert.html">سوییت آلرت</a></li>
+                            <li><a href="scrollbar.html">اسکرولبار</a></li>
+                            <li><a href="spinners.html">اسپینرها</a></li>
+                            <li><a href="animation.html">انیمیشن</a></li>
+                            <li><a href="video_embed.html">تعبیه ویدیو</a></li>
+                            <li><a href="tour.html">تور معرفی</a></li>
+                            <li><a href="slick.html">اسلایدر</a></li>
+                            <li><a href="bootstrap_slider.html">اسلایدر بوتسترپ</a></li>
+                            <li><a href="scrollpy.html">اسکرولپای</a></li>
+                            <li><a href="tooltips_popovers.html">تولتیپ ها</a></li>
+                            <li><a href="ratings.html">امتیاز</a></li>
+                            <li><a href="prismjs.html">پلاگین Prismjs</a></li>
+                            <li><a href="count_down.html">شمارنده کاهشی</a></li>
+                            <li><a href="count_up.html"> شمارنده افزایشی </a></li>
+                            <li><a href="draggable.html">قابل کشیدن</a></li>
+                            <li><a href="tree-view.html">نمایش درختی</a></li>
+                            <li><a href="block_ui.html">بلاک یوآی </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#icons">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_115_44)">
+                                    <path
+                                        d="M21 11.25V19.5C21 20.3284 20.3284 21 19.5 21H5.25C4.42157 21 3.75 20.3284 3.75 19.5V11.25M12 4.875C12 3.42525 10.8247 2.25 9.375 2.25C7.92525 2.25 6.75 3.42525 6.75 4.875C6.75 6.32475 7.92525 7.5 9.375 7.5C10.1095 7.5 12 7.5 12 7.5M12 4.875C12 5.59024 12 7.5 12 7.5M12 4.875C12 3.42525 13.1753 2.25 14.625 2.25C16.0747 2.25 17.25 3.42525 17.25 4.875C17.25 6.32475 16.0747 7.5 14.625 7.5C13.8905 7.5 12 7.5 12 7.5M12 7.5V21M3.375 11.25H21.375C21.9963 11.25 22.5 10.7463 22.5 10.125V8.625C22.5 8.00368 21.9963 7.5 21.375 7.5H3.375C2.75368 7.5 2.25 8.00368 2.25 8.625V10.125C2.25 10.7463 2.75368 11.25 3.375 11.25Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_115_44">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>آیکن ها</a>
+                        <ul class="collapse" id="icons">
+                            <li><a href="fontawesome.html">فونت آسم</a></li>
+                            <li><a href="flag_icons.html">پرچم</a></li>
+                            <li><a href="tabler-icons.html">تبلر</a></li>
+                            <li><a href="weather_icon.html">ویدر</a></li>
+                            <li><a href="animated_icon.html">انیمیشنی</a></li>
+                            <li><a href="iconoir_icon.html">آیکنایر</a></li>
+                            <li><a href="phosphor.html">فسفر</a></li>
+                        </ul>
+                    </li>
+                    <li class="no-sub">
+                        <a href="misc.html">
+
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_26)">
+                                    <path
+                                        d="M2.25 7.125C2.25 6.50368 2.75368 6 3.375 6H9.375C9.99632 6 10.5 6.50368 10.5 7.125V10.875C10.5 11.4963 9.99632 12 9.375 12H3.375C2.75368 12 2.25 11.4963 2.25 10.875V7.125Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M14.25 8.625C14.25 8.00368 14.7537 7.5 15.375 7.5H20.625C21.2463 7.5 21.75 8.00368 21.75 8.625V16.875C21.75 17.4963 21.2463 18 20.625 18H15.375C14.7537 18 14.25 17.4963 14.25 16.875V8.625Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M3.75 16.125C3.75 15.5037 4.25368 15 4.875 15H10.125C10.7463 15 11.25 15.5037 11.25 16.125V18.375C11.25 18.9963 10.7463 19.5 10.125 19.5H4.875C4.25368 19.5 3.75 18.9963 3.75 18.375V16.125Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_26">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>متفرقه</a>
+                    </li>
+                    <li class="menu-title"><span>نقشه و چارت </span></li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#maps">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_27)">
+                                    <path
+                                        d="M15 10.5C15 12.1569 13.6569 13.5 12 13.5C10.3431 13.5 9 12.1569 9 10.5C9 8.84315 10.3431 7.5 12 7.5C13.6569 7.5 15 8.84315 15 10.5Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M19.5 10.5C19.5 17.6421 12 21.75 12 21.75C12 21.75 4.5 17.6421 4.5 10.5C4.5 6.35786 7.85786 3 12 3C16.1421 3 19.5 6.35786 19.5 10.5Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_27">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>نقشه</a>
+                        <ul class="collapse" id="maps">
+                            <li><a href="google-map.html">نقشه گوگل</a></li>
+                            <li><a href="leaflet-map.html">نقشه لیفلت</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#chart">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_28)">
+                                    <path
+                                        d="M10.5 6C6.35786 6 3 9.35786 3 13.5C3 17.6421 6.35786 21 10.5 21C14.6421 21 18 17.6421 18 13.5H10.5V6Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M13.5 10.5H21C21 6.35786 17.6421 3 13.5 3V10.5Z" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_28">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>چارت ها</a>
+                        <ul class="collapse" id="chart">
+                            <li><a href="chart_js.html">پلاگین ChartJs</a></li>
+
+
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#apexcharts-page">اپکسچارتز</a>
+                                <ul class="collapse" id="apexcharts-page">
+                                    <li><a href="line.html">خطی</a></li>
+                                    <li><a href="area_charts.html">سطحی</a></li>
+                                    <li><a href="column.html">ستونی</a></li>
+                                    <li><a href="bar.html">میله ای</a></li>
+                                    <li><a href="mixed.html">ترکیبی</a></li>
+                                    <li><a href="timeline_range_charts.html">تایملاین و میله حدوددار</a></li>
+                                    <li><a href="candlestick_charts.html">نمودار شمعی</a></li>
+                                    <li><a href="boxplot.html">نمودار جعبه ایی</a></li>
+                                    <li><a href="bubble.html">حبابی</a></li>
+                                    <li><a href="scatter.html">پراکندگی</a></li>
+                                    <li><a href="heatmap.html">نقشه حرارتی</a></li>
+                                    <li><a href="treemap.html">نقشه درختی</a></li>
+                                    <li><a href="pie_charts.html">دایره ایی</a></li>
+                                    <li><a href="radial_bar.html">میله شعاعی</a></li>
+                                    <li><a href="radar_chart.html">رادار</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title"><span>جدول و فرم ها </span></li>
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#table">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_29)">
+                                    <path
+                                        d="M3.375 19.5H20.625M3.375 19.5C2.75368 19.5 2.25 18.9963 2.25 18.375M3.375 19.5H10.875C11.4963 19.5 12 18.9963 12 18.375M2.25 18.375V5.625M2.25 18.375V16.875C2.25 16.2537 2.75368 15.75 3.375 15.75M21.75 18.375V5.625M21.75 18.375C21.75 18.9963 21.2463 19.5 20.625 19.5M21.75 18.375V16.875C21.75 16.2537 21.2463 15.75 20.625 15.75M20.625 19.5H13.125C12.5037 19.5 12 18.9963 12 18.375M21.75 5.625C21.75 5.00368 21.2463 4.5 20.625 4.5H3.375C2.75368 4.5 2.25 5.00368 2.25 5.625M21.75 5.625V7.125C21.75 7.74632 21.2463 8.25 20.625 8.25M2.25 5.625V7.125C2.25 7.74632 2.75368 8.25 3.375 8.25M3.375 8.25H20.625M3.375 8.25H10.875C11.4963 8.25 12 8.75368 12 9.375M3.375 8.25C2.75368 8.25 2.25 8.75368 2.25 9.375V10.875C2.25 11.4963 2.75368 12 3.375 12M20.625 8.25H13.125C12.5037 8.25 12 8.75368 12 9.375M20.625 8.25C21.2463 8.25 21.75 8.75368 21.75 9.375V10.875C21.75 11.4963 21.2463 12 20.625 12M3.375 12H10.875M3.375 12C2.75368 12 2.25 12.5037 2.25 13.125V14.625C2.25 15.2463 2.75368 15.75 3.375 15.75M12 10.875V9.375M12 10.875C12 11.4963 11.4963 12 10.875 12M12 10.875C12 11.4963 12.5037 12 13.125 12M10.875 12C11.4963 12 12 12.5037 12 13.125M13.125 12H20.625M13.125 12C12.5037 12 12 12.5037 12 13.125M20.625 12C21.2463 12 21.75 12.5037 21.75 13.125V14.625C21.75 15.2463 21.2463 15.75 20.625 15.75M3.375 15.75H10.875M12 14.625V13.125M12 14.625C12 15.2463 11.4963 15.75 10.875 15.75M12 14.625C12 15.2463 12.5037 15.75 13.125 15.75M10.875 15.75C11.4963 15.75 12 16.2537 12 16.875M12 18.375V16.875M12 16.875C12 16.2537 12.5037 15.75 13.125 15.75M13.125 15.75H20.625"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_29">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>جدول</a>
+                        <ul class="collapse" id="table">
+                            <li><a href="basic_table.html">جدول ساده</a></li>
+                            <li><a href="data_table.html">جدول داده</a></li>
+                            <li><a href="list_table.html">پلاگین ListJs</a></li>
+                            <li><a href="advance_table.html">جدول پیشرفته</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#forms">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_30)">
+                                    <path
+                                        d="M21 12C21 10.7574 19.9926 9.75 18.75 9.75H15C15 11.4069 13.6569 12.75 12 12.75C10.3431 12.75 9 11.4069 9 9.75H5.25C4.00736 9.75 3 10.7574 3 12M21 12V18C21 19.2426 19.9926 20.25 18.75 20.25H5.25C4.00736 20.25 3 19.2426 3 18V12M21 12V9M3 12V9M21 9C21 7.75736 19.9926 6.75 18.75 6.75H5.25C4.00736 6.75 3 7.75736 3 9M21 9V6C21 4.75736 19.9926 3.75 18.75 3.75H5.25C4.00736 3.75 3 4.75736 3 6V9"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_30">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>المان های فرم</a>
+                        <ul class="collapse" id="forms">
+                            <li><a href="form_validation.html">اعتبارسنجی فرم</a></li>
+                            <li><a href="base_inputs.html">ورودی پایه</a></li>
+                            <li><a href="checkbox_radio.html">چکباکس و رادیو</a></li>
+                            <li><a href="input_groups.html">گروهبندی ورودی ها</a></li>
+                            <li><a href="input_masks.html">ماسک های ورودی</a></li>
+                            <li><a href="floating_labels.html">لیبل های شناور</a></li>
+                            <li><a href="date_picker.html">انتخابگر تاریخ</a></li>
+                            <li><a href="touch_spin.html">تاچ اسپین ها</a></li>
+                            <li><a href="select.html">پلاگین Select2</a></li>
+                            <li><a href="switch.html">سوئیچ ها</a></li>
+                            <li><a href="range_slider.html">اسلایدر محدوده</a></li>
+                            <li><a href="typeahead.html">جستجو در ورودی</a></li>
+                            <li><a href="textarea.html">ورودی متنی</a></li>
+                            <li><a href="clipboard.html">کلیپ بورد</a></li>
+                            <li><a href="file_upload.html">آپلود فایل</a></li>
+                            <li><a href="dual_list_boxes.html">لیست باکس دوتایی</a></li>
+                            <li><a href="default_forms.html">فرم های پیش فرض</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#ready_to_use">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 7.5H13.5M12 10.5H13.5M6 13.5H13.5M6 16.5H13.5M16.5 7.5H19.875C20.4963 7.5 21 8.00368 21 8.625V18C21 19.2426 19.9926 20.25 18.75 20.25M16.5 7.5V18C16.5 19.2426 17.5074 20.25 18.75 20.25M16.5 7.5V4.875C16.5 4.25368 15.9963 3.75 15.375 3.75H4.125C3.50368 3.75 3 4.25368 3 4.875V18C3 19.2426 4.00736 20.25 5.25 20.25H18.75M6 7.5H9V10.5H6V7.5Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>آماده استفاده<span class="badge text-bg-success badge-notification ms-2">2</span>
+                        </a>
+                        <ul class="collapse" id="ready_to_use">
+                            <li><a href="form_wizards.html">فرم مرحله ای</a></li>
+                            <li><a href="form_wizard_1.html">فرم مرحله ای 1</a></li>
+                            <li><a href="form_wizard_2.html">فرم مرحله ای 2</a></li>
+                            <li><a href="ready_to_use_form.html">فرم های آماده استفاده</a></li>
+                            <li><a href="ready_to_use_table.html">جداول آماده استفاده</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title"><span>صفحات</span></li>
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#auth_pages">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_115_66)">
+                                    <path
+                                        d="M3 8.25V18C3 19.2426 4.00736 20.25 5.25 20.25H18.75C19.9926 20.25 21 19.2426 21 18V8.25M3 8.25V6C3 4.75736 4.00736 3.75 5.25 3.75H18.75C19.9926 3.75 21 4.75736 21 6V8.25M3 8.25H21M5.25 6H5.2575V6.0075H5.25V6ZM7.5 6H7.5075V6.0075H7.5V6ZM9.75 6H9.7575V6.0075H9.75V6Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_115_66">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>احراز هویت</a>
+                        <ul class="collapse" id="auth_pages">
+                            <li><a href="sign_in.html">ورود</a></li>
+                            <li><a href="sign_in_1.html">ورود 2 پس زمینه</a></li>
+                            <li><a href="sign_up.html">ثبت نام</a></li>
+                            <li><a href="sign_up_1.html">ثبت نام 2 با پس زمینه</a></li>
+                            <li><a href="password_reset.html">بازنشانی رمز ورود</a></li>
+                            <li><a href="password_reset_1.html">بازنشانی رمز ورود با پس زمینه</a></li>
+                            <li><a href="password_create.html">ایجاد رمز ورود</a></li>
+                            <li><a href="password_create_1.html">ایجاد رمز ورود با پس زمینه</a></li>
+                            <li><a href="lock_screen.html">صفحه قفل</a></li>
+                            <li><a href="lock_screen_1.html">صفحه قفل با پس زمینه</a></li>
+                            <li><a href="two_step_verification.html">احراز هویت دومرحله ایی</a></li>
+                            <li><a href="two_step_verification_1.html">احراز هویت دومرحله ایی 2</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#error_pages">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_32)">
+                                    <path
+                                        d="M12 9V12.75M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM12 15.75H12.0075V15.7575H12V15.75Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_32">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>صفحات خطا</a>
+                        <ul class="collapse" id="error_pages">
+                            <li><a href="error_5F400.html">خطای 400 </a></li>
+                            <li><a href="error_5F403.html">خطای 403 </a></li>
+                            <li><a href="error_5F404.html">خطای 404</a></li>
+                            <li><a href="error_500.html">خطای 500</a></li>
+                            <li><a href="error_503.html">خطای 503</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#other_pages">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_33)">
+                                    <path
+                                        d="M15.75 17.25V20.625C15.75 21.2463 15.2463 21.75 14.625 21.75H4.875C4.25368 21.75 3.75 21.2463 3.75 20.625V7.875C3.75 7.25368 4.25368 6.75 4.875 6.75H6.75C7.26107 6.75 7.76219 6.7926 8.25 6.87444M15.75 17.25H19.125C19.7463 17.25 20.25 16.7463 20.25 16.125V11.25C20.25 6.79051 17.0066 3.08855 12.75 2.37444C12.2622 2.2926 11.7611 2.25 11.25 2.25H9.375C8.75368 2.25 8.25 2.75368 8.25 3.375V6.87444M15.75 17.25H9.375C8.75368 17.25 8.25 16.7463 8.25 16.125V6.87444M20.25 13.5V11.625C20.25 9.76104 18.739 8.25 16.875 8.25H15.375C14.7537 8.25 14.25 7.74632 14.25 7.125V5.625C14.25 3.76104 12.739 2.25 10.875 2.25H9.75"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_33">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>سایر صفحات</a>
+                        <ul class="collapse" id="other_pages">
+                            <li><a href="blank.html">صفحه خالی</a></li>
+                            <li><a href="maintenance.html">تعمیر و نگهداری</a></li>
+                            <li><a href="landing.html">صفحه لندینگ</a></li>
+                            <li><a href="coming_soon.html">صفحه بزودی</a></li>
+                            <li><a href="sitemap.html">نقشه سایت</a></li>
+                            <li><a href="privacy_policy.html">حریم خصوصی</a></li>
+                            <li><a href="terms_condition.html">شرایط و قوانین</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title"><span>سایر</span></li>
+
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#level">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_35)">
+                                    <path
+                                        d="M7.5 4.5H6.75C5.50736 4.5 4.5 5.50736 4.5 6.75V14.25C4.5 15.4926 5.50736 16.5 6.75 16.5H14.25C15.4926 16.5 16.5 15.4926 16.5 14.25V6.75C16.5 5.50736 15.4926 4.5 14.25 4.5H13.5M7.5 8.25L10.5 11.25M10.5 11.25L13.5 8.25M10.5 11.25L10.5 -1.5M16.5 7.5H17.25C18.4926 7.5 19.5 8.50736 19.5 9.75V17.25C19.5 18.4926 18.4926 19.5 17.25 19.5H9.75C8.50736 19.5 7.5 18.4926 7.5 17.25V16.5"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_35">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>دو سطحی</a>
+                        <ul class="collapse" id="level">
+                            <li><a href="#">صفحه خالی</a></li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#level2">سطحی دیگر</a>
+                                <ul class="collapse" id="level2">
+                                    <li><a href="blank.html">صفحه خالی</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="no-sub">
+                        <a href="#">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_34)">
+                                    <path
+                                        d="M19.5 14.25V11.625C19.5 9.76104 17.989 8.25 16.125 8.25H14.625C14.0037 8.25 13.5 7.74632 13.5 7.125V5.625C13.5 3.76104 11.989 2.25 10.125 2.25H8.25M8.25 15H15.75M8.25 18H12M10.5 2.25H5.625C5.00368 2.25 4.5 2.75368 4.5 3.375V20.625C4.5 21.2463 5.00368 21.75 5.625 21.75H18.375C18.9963 21.75 19.5 21.2463 19.5 20.625V11.25C19.5 6.27944 15.4706 2.25 10.5 2.25Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_34">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>مستندات</a>
+                    </li>
+
+                    <li class="no-sub">
+                        <a href="mailto:email@gmail.com">
+                            <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_109_36)">
+                                    <path
+                                        d="M20.25 8.51104C21.1341 8.79549 21.75 9.6392 21.75 10.6082V14.8938C21.75 16.0304 20.9026 16.9943 19.7697 17.0867C19.4308 17.1144 19.0909 17.1386 18.75 17.1592V20.25L15.75 17.25C14.3963 17.25 13.0556 17.1948 11.7302 17.0866C11.4319 17.0623 11.1534 16.9775 10.9049 16.8451M20.25 8.51104C20.0986 8.46232 19.9393 8.43 19.7739 8.41628C18.4472 8.30616 17.1051 8.25 15.75 8.25C14.3948 8.25 13.0528 8.30616 11.7261 8.41627C10.595 8.51015 9.75 9.47323 9.75 10.6082V14.8937C9.75 15.731 10.2099 16.4746 10.9049 16.8451M20.25 8.51104V6.63731C20.25 5.01589 19.0983 3.61065 17.4903 3.40191C15.4478 3.13676 13.365 3 11.2503 3C9.13533 3 7.05233 3.13678 5.00963 3.40199C3.40173 3.61074 2.25 5.01598 2.25 6.63738V12.8626C2.25 14.484 3.40173 15.8893 5.00964 16.098C5.58661 16.1729 6.16679 16.2376 6.75 16.2918V21L10.9049 16.8451"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_109_36">
+                                        <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>پشتیبانی</a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+            <div class="menu-navs">
+                <span class="menu-previous"><i class="ti ti-chevron-right"></i></span>
+                <span class="menu-next"><i class="ti ti-chevron-left"></i></span>
+            </div>
+
+        </nav>
+        <!-- Menu Navigation ends -->
+
+        <div class="app-content">
+            <div class="">
+
+                <!-- Header Section starts -->
+                <header class="header-main">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 col-sm-6 d-flex align-items-center header-left p-0">
+                                <span class="header-toggle ">
+                                    <i class="ph ph-squares-four"></i>
+                                </span>
+
+                                <div class="header-searchbar w-100">
+                                    <form action="#" class="mx-sm-3 app-form app-icon-form ">
+                                        <div class="position-relative">
+                                            <input aria-label="جستجو" class="form-control" placeholder="جستجو..."
+                                                type="search">
+                                            <i class="ti ti-search text-dark"></i>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-4 col-sm-6 d-flex align-items-center justify-content-end header-right p-0">
+
+                                <ul class="d-flex align-items-center">
+
+                                    <li class="header-language">
+                                        <div class="flex-shrink-0 dropdown" id="lang_selector">
+                                            <a aria-expanded="false" class="d-block head-icon ps-0"
+                                                data-bs-toggle="dropdown" href="#">
+                                                <div class="lang-flag lang-en ">
+                                                    <span class="flag rounded-circle overflow-hidden">
+                                                        <i class=""></i>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                            <ul class="dropdown-menu language-dropdown header-card border-0">
+                                                <li class="lang lang-en selected dropdown-item p-2"
+                                                    data-bs-placement="top" data-bs-toggle="tooltip"
+                                                    title="ایالات متحده">
+                                                    <span class="d-flex align-items-center">
+                                                        <i
+                                                            class="flag-icon flag-icon-usa flag-icon-squared rounded-circle f-s-20"></i>
+                                                        <span class="ps-2">ایالات متحده</span>
+                                                    </span>
+                                                </li>
+                                                <li class="lang lang-pt dropdown-item p-2" data-bs-toggle="tooltip"
+                                                    title="فرانسه">
+                                                    <span class="d-flex align-items-center">
+                                                        <i
+                                                            class="flag-icon flag-icon-fra flag-icon-squared rounded-circle f-s-20"></i>
+                                                        <span class="ps-2">فرانسه</span>
+                                                    </span>
+                                                </li>
+                                                <li class="lang lang-es dropdown-item p-2" data-bs-toggle="tooltip"
+                                                    title="بریتانیا">
+                                                    <span class="d-flex align-items-center">
+                                                        <i
+                                                            class="flag-icon flag-icon-gbr flag-icon-squared rounded-circle f-s-20"></i>
+                                                        <span class="ps-2">بریتانیا</span>
+                                                    </span>
+                                                </li>
+                                                <li class="lang lang-es dropdown-item p-2" data-bs-toggle="tooltip"
+                                                    title="ایتالیا">
+                                                    <span class="d-flex align-items-center">
+                                                        <i
+                                                            class="flag-icon flag-icon-ita flag-icon-squared rounded-circle f-s-20"></i>
+                                                        <span class="ps-2">ایتالیا</span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </li>
+
+                                    <li class="header-apps">
+                                        <a aria-controls="appscanvasRights"
+                                            class="d-block head-icon bg-light-dark rounded-circle f-s-22 p-2"
+                                            data-bs-target="#appscanvasRights" data-bs-toggle="offcanvas" href="#"
+                                            role="button">
+                                            <i class="ph ph-bounding-box"></i>
+
+                                        </a>
+
+                                        <div aria-labelledby="appscanvasRightsLabel"
+                                            class="offcanvas offcanvas-start header-apps-canvas" id="appscanvasRights"
+                                            tabindex="-1">
+                                            <div class="offcanvas-header">
+                                                <h5 class="offcanvas-title" id="appscanvasRightsLabel">میانبر</h5>
+                                                <div class="app-dropdown flex-shrink-0">
+                                                    <a aria-expanded="false" class=" p-1" data-bs-auto-close="outside"
+                                                        data-bs-toggle="dropdown" href="#" role="button">
+                                                        <i class="ph-bold  ph-faders-horizontal f-s-20"></i>
+
+
+                                                    </a>
+                                                    <ul class="dropdown-menu mb-3">
+                                                        <li class="dropdown-item">
+                                                            <a href="setting.html" target="_blank">تنظیمات حریم
+                                                                خصوصی</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="setting.html" target="_blank">تنظیمات حساب</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="setting.html" target="_blank">تنظیمات دسترسی</a>
+                                                        </li>
+                                                        <li class="dropdown-divider"></li>
+                                                        <li class="dropdown-item border-0">
+                                                            <a aria-expanded="false" data-bs-toggle="dropdown" href="#"
+                                                                role="button">تنظیمات بیشتر</a>
+                                                            <ul class="dropdown-menu sub-menu">
+                                                                <li class="dropdown-item">
+                                                                    <a href="setting.html" target="_blank">بکاپ و
+                                                                        بازیابی</a>
+                                                                </li>
+                                                                <li class="dropdown-item">
+                                                                    <a href="setting.html" target="_blank">
+                                                                        <span>استفاده داده</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="dropdown-item">
+                                                                    <a href="setting.html" target="_blank">
+                                                                        <span>قالب</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li
+                                                                    class="dropdown-item d-flex align-items-center justify-content-between">
+                                                                    <a href="#">
+                                                                        <p class="mb-0">اعلان</p>
+                                                                    </a>
+                                                                    <div class="flex-shrink-0">
+                                                                        <div class="form-check form-switch">
+                                                                            <input
+                                                                                class="form-check-input  form-check-primary"
+                                                                                id="notificationSwitch" type="checkbox">
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="offcanvas-body app-scroll">
+                                                <div class="row row-cols-3 g-2">
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-primary w-100 rounded-3 py-3 px-2 "
+                                                            href="product.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-shopping-bag-open  f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">فروشگاه</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-danger w-100 rounded-3 py-3 px-2 "
+                                                            href="email.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-envelope  f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">ایمیل</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-success w-100 rounded-3 py-3 px-2 "
+                                                            href="chat.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-chat-circle-text  f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">چت</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-warning w-100 rounded-3 py-3 px-2 "
+                                                            href="project_app.html" target="_blank">
+                                                            <span>
+                                                                <i
+                                                                    class="ph-light  ph-projector-screen-chart  f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">پروژه</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-info w-100 rounded-3 py-3 px-2 "
+                                                            href="invoice.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-scroll f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">فاکتور</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-dark w-100 rounded-3 py-3 px-2 "
+                                                            href="blog.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-notebook f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">بلاگ</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-danger w-100 rounded-3 py-3 px-2 "
+                                                            href="calendar.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-calendar f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">تقویم</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-warning w-100 rounded-3 py-3 px-2 "
+                                                            href="file_manager.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-folder-open f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark txt-ellipsis-1">مدیریت فایل
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-primary w-100 rounded-3 py-3 px-2 "
+                                                            href="gallery.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-google-photos-logo f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">گالری</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-success w-100 rounded-3 py-3 px-2 "
+                                                            href="profile.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-users-three f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">پروفایل</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="text-light-secondary w-100 rounded-3 py-3 px-2 "
+                                                            href="kanban_board.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-selection-foreground f-s-30"></i>
+                                                            </span>
+                                                            <p class="mb-0 f-w-500 text-dark">تخته وظایف</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex-center text-center">
+                                                        <a class="d-flex-center text-light-secondary w-100 h-100 rounded-3 p-2 dashed-1-secondary"
+                                                            href="kanban_board.html" target="_blank">
+                                                            <span>
+                                                                <i class="ph-light  ph-plus f-s-30"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-cart">
+                                        <a aria-controls="cartcanvasRight"
+                                            class="d-block head-icon position-relative bg-light-dark rounded-circle f-s-22 p-2"
+                                            data-bs-target="#cartcanvasRight" data-bs-toggle="offcanvas" href="#"
+                                            role="button">
+                                            <i class="ph ph-shopping-cart-simple"></i>
+                                            <span
+                                                class="position-absolute translate-middle badge rounded-pill bg-danger badge-notification">4</span>
+                                        </a>
+                                        <div aria-labelledby="cartcanvasRightLabel"
+                                            class="offcanvas offcanvas-start header-cart-canvas" id="cartcanvasRight"
+                                            tabindex="-1">
+                                            <div class="offcanvas-header">
+                                                <h5 class="offcanvas-title" id="cartcanvasRightLabel">سبد خرید</h5>
+                                                <button aria-label="بستن" class="btn-close" data-bs-dismiss="offcanvas"
+                                                    type="button"></button>
+                                            </div>
+                                            <div class="offcanvas-body app-scroll p-0">
+                                                <div class="head-container">
+                                                    <div class="head-box">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="assets/images/header/cart/01.png">
+                                                        </span>
+
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="product_details.html"
+                                                                target="_blank"> کوله پشتی (3<i
+                                                                    class="ti ti-star-filled text-warning f-s-12"></i>)
+                                                            </a>
+                                                            <div>
+                                                                <span class="text-dark"><span
+                                                                        class="text-secondary f-w-400">سایز</span> :
+                                                                    M</span>
+                                                                <span class="text-dark ms-2"><span
+                                                                        class="text-secondary f-w-400">رنگ</span>
+                                                                    :صورتی</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <p class="text-muted f-w-500 mb-0">6005000 x 1</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="head-box">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="assets/images/header/cart/05.png">
+                                                        </span>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="product_details.html"
+                                                                target="_blank"> ساعت زنانه (4<i
+                                                                    class="ti ti-star-filled text-warning f-s-12"></i>)</a>
+                                                            <div>
+                                                                <span class="text-dark"><span
+                                                                        class="text-secondary f-w-400">سایز</span> :
+                                                                    S</span>
+                                                                <span class="text-dark ms-2"><span
+                                                                        class="text-secondary f-w-400">رنگ</span>
+                                                                    :طلایی</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <p class="text-muted f-w-500 mb-0">51910000 x 2</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="head-box">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="assets/images/header/cart/04.png">
+                                                        </span>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="product_details.html"
+                                                                target="_blank">صندل (5 <i
+                                                                    class="ti ti-star-filled text-warning f-s-12"></i>)</a>
+                                                            <div>
+                                                                <span class="text-dark"><span
+                                                                        class="text-secondary f-w-400">سایز</span> :
+                                                                    8</span>
+                                                                <span class="text-dark ms-2"><span
+                                                                        class="text-secondary f-w-400">رنگ</span>
+                                                                    :سفید</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <p class="text-muted f-w-500 mb-0">390000 x 2</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="head-box ">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="assets/images/header/cart/03.png">
+                                                        </span>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="product_details.html"
+                                                                target="_blank"> کت (3<i
+                                                                    class="ti ti-star-filled text-warning f-s-12"></i>)</a>
+                                                            <div>
+                                                                <span class="text-dark"><span
+                                                                        class="text-secondary f-w-400">سایز</span> :
+                                                                    XL</span>
+                                                                <span class="text-dark ms-2"><span
+                                                                        class="text-secondary f-w-400">رنگ</span>
+                                                                    :آبی</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <p class="text-muted f-w-500 mb-0">30000000 x 2</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="head-box ">
+                                                        <span
+                                                            class="b-1-light bg-light-primary h-45 w-45 d-flex-center b-r-6">
+                                                            <img alt="سبد خرید" class="img-fluid p-1"
+                                                                src="assets/images/header/cart/02.png">
+                                                        </span>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <a class="mb-0 f-w-600 f-s-16" href="product_details.html"
+                                                                target="_blank"> کفش (3<i
+                                                                    class="ti ti-star-filled text-warning f-s-12"></i>)</a>
+                                                            <div>
+                                                                <span class="text-dark"><span
+                                                                        class="text-secondary f-w-400">سایز</span> :
+                                                                    9</span>
+                                                                <span class="text-dark ms-2"><span
+                                                                        class="text-secondary f-w-400">رنگ</span>
+                                                                    :سفید</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <p class="text-muted f-w-500 mb-0">45000000 x 1</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hidden-massage py-4 px-3">
+
+                                                        <div>
+                                                            <i
+                                                                class="ph-duotone  ph-shopping-bag-open f-s-50 text-primary"></i>
+                                                            <h6 class="mb-0">سبد خرید شما خالی است</h6>
+                                                            <p class="text-secondary mb-0">سفارش خود را ثبت کنید :)</p>
+                                                            <a class="btn btn-light-primary btn-xs mt-2"
+                                                                href="product_details.html">خرید کنید</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="offcanvas-footer">
+                                                <div class="head-box-footer p-3">
+                                                    <div class="mb-4">
+                                                        <h6 class="text-muted f-w-600">کل <span
+                                                                class="float-start text-primary">346800000</span></h6>
+                                                    </div>
+                                                    <div class="header-cart-btn">
+                                                        <a class="btn btn-primary" href="cart.html" role="button"
+                                                            target="_blank">
+                                                            <i class="ti ti-eye"></i> سبد خرید</a>
+                                                        <a class="btn btn-success" href="checkout.html" role="button"
+                                                            target="_blank">پرداخت <i
+                                                                class="ti ti-shopping-cart"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-dark">
+                                        <div class="sun-logo head-icon bg-light-dark rounded-circle f-s-22 p-2">
+                                            <i class="ph ph-moon-stars"></i>
+                                        </div>
+                                        <div class="moon-logo head-icon bg-light-dark rounded-circle f-s-22 p-2">
+                                            <i class="ph ph-sun-dim"></i>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-notification">
+                                        <a aria-controls="notificationcanvasRight"
+                                            class="d-block head-icon position-relative bg-light-dark rounded-circle f-s-22 p-2"
+                                            data-bs-target="#notificationcanvasRight" data-bs-toggle="offcanvas"
+                                            href="#" role="button">
+                                            <i class="ph ph-bell"></i>
+                                            <span
+                                                class="position-absolute translate-middle p-1 bg-primary border border-light rounded-circle animate__animated animate__fadeIn animate__infinite animate__slower"></span>
+                                        </a>
+                                        <div aria-labelledby="notificationcanvasRightLabel"
+                                            class="offcanvas offcanvas-start header-notification-canvas"
+                                            id="notificationcanvasRight" tabindex="-1">
+                                            <div class="offcanvas-header">
+                                                <h5 class="offcanvas-title" id="notificationcanvasRightLabel">اعلان</h5>
+                                                <button aria-label="بستن" class="btn-close" data-bs-dismiss="offcanvas"
+                                                    type="button"></button>
+                                            </div>
+                                            <div class="offcanvas-body app-scroll p-0">
+                                                <div class="head-container">
+                                                    <div class="notification-message head-box">
+
+                                                        <div class="message-content-box flex-grow-1 pe-2">
+
+                                                            <a class="f-s-15 text-dark mb-0"
+                                                                href="read_email.html"><span
+                                                                    class="f-w-500 text-dark">الاهه حسابی</span> در حال
+                                                                ویرایش <span
+                                                                    class="f-w-500 text-dark">Report.doc</span></a>
+                                                            <div>
+                                                                <a class="d-inline-block f-w-500 text-success ms-1"
+                                                                    href="#">تایید</a>
+                                                                <a class="d-inline-block f-w-500 text-danger"
+                                                                    href="#">رد کردن</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <div>
+                                                                <span class="badge text-light-primary">23 اسفند </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-message head-box">
+
+                                                        <div class="message-content-box flex-grow-1 pe-2">
+                                                            <a class="f-s-15 text-dark mb-0"
+                                                                href="read_email.html"> سلام <span
+                                                                    class="f-w-500 text-dark">الهام مروتی</span>، سفارش
+                                                                شما بزودی ارسال میشود ، از طرف <span
+                                                                    class="f-w-500 text-dark">@Shopper.com</span></a>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <div>
+                                                                <span class="badge text-light-primary">23 اسفند </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-message head-box">
+                                                        <div class="message-content-box flex-grow-1 pe-2">
+                                                            <a class="f-s-15 text-dark mb-0"
+                                                                href="read_email.html"><span
+                                                                    class="f-w-500 text-dark">سیما یاوری</span> یک فایل
+                                                                به اشتراک گذاشت<span class="f-w-500 text-dark">
+                                                                    Dropdown.pdf </span></a>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <div>
+                                                                <span class="badge text-light-primary"> 30 دقیقه</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-message head-box">
+                                                        <div class="message-content-box flex-grow-1 pe-2">
+                                                            <a class="f-s-15 text-dark mb-0"
+                                                                href="read_email.html"><span
+                                                                    class="f-w-500 text-dark">بهنام حسابی</span> یک نظر
+                                                                ثبت کرد <span
+                                                                    class="f-w-500 text-dark">Final_Report.pdf</span></a>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <div>
+                                                                <span class="badge text-light-primary"> 45 دقیقه</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-message head-box">
+                                                        <div class="message-content-box  flex-grow-1 pe-2">
+                                                            <a class="f-s-15 text-dark mb-0 "
+                                                                href="read_email.html"><span
+                                                                    class="f-w-600 text-dark">@Romaine</span> شما را به
+                                                                یک میتینگ دعوت کرد</a>
+                                                            <div>
+                                                                <a class="d-inline-block f-w-500 text-success ms-1"
+                                                                    href="#">پیوستن</a>
+                                                                <a class="d-inline-block f-w-500 text-danger"
+                                                                    href="#">رد کردن</a>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <i class="ph ph-trash f-s-18 text-danger close-btn"></i>
+                                                            <div>
+                                                                <span class="badge text-light-primary"> 1 ساعت قبل
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="hidden-massage py-4 px-3">
+                                                        <div>
+                                                            <i
+                                                                class="ph-duotone  ph-bell-ringing f-s-50 text-primary"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0">اعلان ندارید</h6>
+                                                            <p class="text-dark">اعلان های شما در اینجا نمایش داده میشود
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header Section ends -->
+
+                <!-- Body main section starts -->
+                <main>
+                    <div class="container-fluid">
+                        <!-- Breadcrumb start -->
+                        <div class="row m-1">
+                            <div class="col-12 ">
+                                <h4 class="main-title">بلاگ</h4>
+                                <ul class="app-line-breadcrumbs mb-3">
+                                    <li class="">
+                                        <a class="f-s-14 f-w-500" href="#">
+                                            <span>
+                                                <i class="ph-duotone  ph-stack f-s-16"></i> برنامه ها</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="f-s-14 f-w-500" href="#">صفحات بلاگ</a>
+                                    </li>
+                                    <li class="active">
+                                        <a class="f-s-14 f-w-500" href="#">بلاگ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Breadcrumb end -->
+
+                        <!-- blog start -->
+                        <div class="row blog-section">
+                            <!-- Technology start -->
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/01.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/01.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">تکنولوژی</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.01.21</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">توسعه دهنده وب</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است.
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-primary position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/1.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0"> بهناز نادری</h6>
+                                                <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Technology end -->
+                            <!-- Lifestyle start -->
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/02.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/02.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge">سبک زندگی</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.03.22</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">عکاس</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است.
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-dark position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/2.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0"> جواد پایدار</h6>
+                                                <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Lifestyle end -->
+                            <!-- Travel start -->
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/04.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/04.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">سفر</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.03.22</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">سفر</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است. ...
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-danger position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/4.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0"> الهام افتخاری</h6>
+                                                <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Travel end -->
+                            <!-- Sports start -->
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/06.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/06.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">ورزش</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.03.22</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">بلاگ ورزشی</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است.
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-warning position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/3.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0">فرهاد مرادی</h6>
+                                                <p class="text-secondary f-s-12 mb-0">10 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sports end -->
+
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/05.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/05.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">سفر</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.04.12</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">زندگی در لحظه</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-secondary position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/5.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0">ویدا آسایش</h6>
+                                                <p class="text-secondary f-s-12 mb-0">7 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/07.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/07.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">سبک زندگی</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.03.22</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">لورم ایپسوم متن ساختگی.</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است....
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-success position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/11.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0">سیما داوودی</h6>
+                                                <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/08.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/08.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">انبارداری</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.08.22</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2"> نرم افزار انبارداری</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است....</p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-info position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/14.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0"> بهرام رها</h6>
+                                                <p class="text-secondary f-s-12 mb-0">9 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4 col-xxl-3">
+                                <div class="card blog-card overflow-hidden">
+                                    <a class="glightbox img-hover-zoom" data-glightbox="type: image; zoomable: true;"
+                                        href="assets/images/blog-app/09.jpg">
+                                        <img alt="توضیحات تصویر" class="card-img-top"
+                                            src="assets/images/blog-app/09.jpg">
+                                    </a>
+                                    <div class="tag-container">
+                                        <span class="badge text-light-secondary">زندگی</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-body-secondary"><i class="ti ti-calendar-due blog-date-icon"></i>
+                                            1404.2.20</p>
+                                        <a class="bloglink" href="blog_read_more.html">
+                                            <h5 class="title-text mb-2">کاوش در زندگی .</h5>
+                                        </a>
+                                        <p class="card-text text-secondary">
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است....
+                                        </p>
+                                        <div class="app-divider-v dashed py-3"></div>
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                            <div
+                                                class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-dark position-absolute">
+                                                <img alt="آواتار" class="img-fluid" src="assets/images/avatar/12.png">
+                                            </div>
+                                            <div class="pe-5">
+                                                <h6 class="text-dark f-w-500 mb-0">کامران وزیری</h6>
+                                                <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-group dropdown-icon-none">
+                                                    <button aria-expanded="false"
+                                                        class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                        data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                        <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-bs-target="#exampleModal" data-bs-toggle="modal"><a
+                                                                class="dropdown-item text-success" href="#"><i
+                                                                    class="ti ti-archive"></i> ویرایش </a></li>
+                                                        <li class="delete-btn"><a class="dropdown-item text-danger"
+                                                                href="#"><i class="ti ti-trash"></i> حذف</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Collect Moments start -->
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card vertical-blog mb-3 hover-effect overflow-hidden">
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <a class="glightbox img-hover-zoom"
+                                                data-glightbox="type: image; zoomable: true;"
+                                                href="assets/images/blog-app/10.jpg">
+                                                <img alt="توضیحات تصویر" class="card-img-top"
+                                                    src="assets/images/blog-app/10.jpg">
+                                            </a>
+
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-body">
+                                                <p class="text-body-secondary"><i
+                                                        class="ti ti-calendar-due blog-date-icon"></i>
+                                                    1404.03.24
+                                                </p>
+                                                <a href="blog_read_more.html">
+                                                    <h5 class="title-text mb-3 bloglink">شکار لحظه ها</h5>
+                                                </a>
+                                                <p class="card-text text-secondary">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه
+                                                    و مجله در ستون و سطرآنچنان که لازم است و برای.
+                                                </p>
+                                                <p class="card-text text-secondary">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه
+                                                    و مجله در ستون و سطرآنچنان که لازم است و برای
+                                                </p>
+                                                <div class="app-divider-v mb-2"></div>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                                    <div
+                                                        class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-dark position-absolute">
+                                                        <img alt="آواتار" class="img-fluid"
+                                                            src="assets/images/avatar/11.png">
+                                                    </div>
+                                                    <div class="pe-5">
+                                                        <h6 class="text-dark f-w-500 mb-0"> میترا سینا</h6>
+                                                        <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                                    </div>
+                                                    <div>
+                                                        <div class="btn-group dropdown-icon-none">
+                                                            <button aria-expanded="false"
+                                                                class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                                data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                                type="button">
+                                                                <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li data-bs-target="#exampleModal"
+                                                                    data-bs-toggle="modal"><a
+                                                                        class="dropdown-item text-success" href="#"><i
+                                                                            class="ti ti-archive"></i> ویرایش </a></li>
+                                                                <li class="delete-btn"><a
+                                                                        class="dropdown-item text-danger" href="#"><i
+                                                                            class="ti ti-trash"></i> حذف </a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Collect Moments end -->
+
+                            <!-- just me self start -->
+                            <div class="col-md-12 col-lg-6">
+                                <div class="card vertical-blog mb-3 hover-effect overflow-hidden">
+                                    <div class="row g-0">
+                                        <div class="col-sm-4">
+                                            <a class="glightbox img-hover-zoom"
+                                                data-glightbox="type: image; zoomable: true;"
+                                                href="assets/images/blog-app/11.jpg">
+                                                <img alt="توضیحات تصویر" class="card-img-top"
+                                                    src="assets/images/blog-app/11.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-body">
+                                                <p class="text-body-secondary"><i
+                                                        class="ti ti-calendar-due blog-date-icon"></i>
+                                                    1404.03.24
+                                                </p>
+                                                <a href="blog_read_more.html">
+                                                    <h5 class="title-text mb-2 bloglink">زندگی روزمره</h5>
+                                                </a>
+                                                <p class="card-text text-secondary">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه
+                                                    و مجله در ستون و سطرآنچنان که لازم است و برای.
+                                                </p>
+                                                <p class="card-text text-secondary">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                    استفاده از طراحان گرافیک است.
+                                                </p>
+
+                                                <div class="app-divider-v mb-2"></div>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center gap-2 position-relative">
+                                                    <div
+                                                        class="h-40 w-40 d-flex-center b-r-10 overflow-hidden bg-dark position-absolute">
+                                                        <img alt="آواتار" class="img-fluid"
+                                                            src="assets/images/avatar/12.png">
+                                                    </div>
+                                                    <div class="pe-5">
+                                                        <h6 class="text-dark f-w-500 mb-0"> پدرام هدایت</h6>
+                                                        <p class="text-secondary f-s-12 mb-0">1 روز قبل</p>
+                                                    </div>
+                                                    <div>
+                                                        <div class="btn-group dropdown-icon-none">
+                                                            <button aria-expanded="false"
+                                                                class="btn border-0 icon-btn b-r-4 dropdown-toggle"
+                                                                data-bs-auto-close="true" data-bs-toggle="dropdown"
+                                                                type="button">
+                                                                <i class="ti ti-dots-vertical f-s-18 text-dark"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li data-bs-target="#exampleModal"
+                                                                    data-bs-toggle="modal"><a
+                                                                        class="dropdown-item text-success" href="#"><i
+                                                                            class="ti ti-archive"></i> ویرایش </a></li>
+                                                                <li class="delete-btn"><a
+                                                                        class="dropdown-item text-danger" href="#"><i
+                                                                            class="ti ti-trash"></i> حذف </a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- just me self end -->
+                        </div>
+                        <!-- blog end -->
+                    </div>
+                </main>
+                <!-- Body main section ends -->
+
+                <!-- tap on top -->
+                <div class="go-top">
+                    <span class="progress-value">
+                        <i class="ti ti-arrow-up"></i>
+                    </span>
+                </div>
+
+                <!-- Footer Section starts-->
+                <footer>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-9 col-12">
+                                <p class="footer-text f-w-600 mb-0">© 1404 کای ادمین . کلیه حقوق محفوظ است
+                                    نسخه 1.0.0</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="footer-text text-end">
+                                    <a class="f-w-500 text-primary" href="mailto:email@gmail.com"> پشتیبانی <i
+                                            class="ti ti-help"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer Section ends-->
+
+                <!-- Modal -->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal"
+                    tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">عنوان مودال</h1>
+                                <button aria-label="بستن" class="btn-close" data-bs-dismiss="modal"
+                                    type="button"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="app-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">فایل</label>
+                                        <input class="form-control" type="file">
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="floatingInput1" placeholder="عنوان بلاگ"
+                                            type="email" value="Web Development">
+                                        <label for="floatingInput1">عنوان بلاگ</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="نظر خود را وارد کنید"></textarea>
+                                        <label>توضیحات بلاگ</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="floatingInput2" type="date">
+                                        <label for="floatingInput2">تاریخ بلاگ</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">بستن</button>
+                                <button class="btn btn-primary" data-bs-dismiss="modal" type="button">ذخیره
+                                    تغییرات</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--customizer-->
+    <div id="customizer"></div>
+
+    <!-- latest jquery-->
+    <script src="assets/js/jquery-3.6.3.min.js"></script>
+
+    <!-- Simple bar js-->
+    <script src="assets/vendor/simplebar/simplebar.js"></script>
+
+    <!-- Bootstrap js-->
+    <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- phosphor js -->
+    <script src="assets/vendor/phosphor/phosphor.js"></script>
+
+    <!-- slick-file -->
+    <script src="assets/vendor/slick/slick.min.js"></script>
+
+    <!-- Glight js -->
+    <script src="assets/vendor/glightbox/glightbox.min.js"></script>
+
+    <!--js-->
+    <script src="assets/js/blog.js"></script>
+
+    <!--js-->
+    <script src="assets/js/script.js"></script>
+
+    <!-- Customizer js-->
+    <script src="assets/js/customizer.js"></script>
+
+</body>
+
+</html>
