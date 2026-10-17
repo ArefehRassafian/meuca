@@ -356,5 +356,5 @@ It can be further extended with additional features and prepared for production 
 ---
 
 👨‍💻 Developer
-
+I have been involved in the backend of the site, and frontend design is not my job.
 Developed with ❤️ using Python, Django, HTML, CSS, JavaScript, and Bootstrap.
