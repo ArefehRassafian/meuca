@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.urls import reverse
 import random
+import secrets
+from datetime import timedelta
 
 import random
 
 from django.contrib.auth import login, authenticate, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.core.mail import send_mail
+from django.contrib.auth.hashers import check_password, make_password
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -17,7 +21,7 @@ from django.views.generic import TemplateView, View
 
 from products.models import Product
 from .forms import RegisterForm, ProfileForm, ContactUsForm , CustomPasswordChangeForm , AddressForm
-from .models import Message
+from .models import Message, PasswordResetRequest, PendingRegistration
 
 User = get_user_model()
 
@@ -285,28 +289,16 @@ def forgot_password(request):
                 }
             )
 
-        # ساخت کد 6 رقمی
-        code = str(
-            random.randint(100000, 999999)
+        code = f"{secrets.randbelow(900000) + 100000}"
+        PasswordResetRequest.objects.filter(user=user).delete()
+        reset_request = PasswordResetRequest.objects.create(
+            user=user,
+            code=make_password(code),
         )
-
-        # ذخیره اطلاعات در Session
-        request.session["forgot_phone"] = phone_number
-        request.session["forgot_code"] = code
-        request.session["forgot_user_id"] = user.id
-        request.session["forgot_attempts"] = 0
-        request.session.set_expiry(120)
-
-        # فعلاً به جای SMS
-        # کد را در ترمینال چاپ می‌کنیم
-        print("=" * 40)
-        print("کد فراموشی رمز عبور")
-        print(f"شماره تلفن: {phone_number}")
-        print(f"کد: {code}")
-        print("=" * 40)
-
+        print(f"Password reset code for {phone_number}: {code}")
         return redirect(
-            "accounts:verify_forgot_password"
+            "accounts:verify_forgot_password",
+            token=reset_request.token,
         )
 
     return render(
@@ -315,133 +307,55 @@ def forgot_password(request):
     )
 
 
-def verify_forgot_password(request):
-
-    phone = request.session.get(
-        "forgot_phone"
-    )
-
-    user_id = request.session.get(
-        "forgot_user_id"
-    )
-
-    saved_code = request.session.get(
-        "forgot_code"
-    )
-
-    attempts = request.session.get(
-        "forgot_attempts",
-        0
-    )
-
-    # Session وجود ندارد
-    if not phone or not user_id or not saved_code:
-        print("aduvAsdddddddddddddddddddddddddddd")
-
-        return redirect(
-            "accounts:forgot_password"
-
+def verify_forgot_password(request, token):
+    try:
+        reset_request = PasswordResetRequest.objects.select_related("user").get(
+            token=token
         )
+    except PasswordResetRequest.DoesNotExist:
+        raise Http404("درخواست بازیابی رمز عبور پیدا نشد.")
+
+    if timezone.now() - reset_request.created_at > timedelta(minutes=10):
+        reset_request.delete()
+        return redirect("accounts:forgot_password")
 
     error = None
+    password_form = CustomPasswordChangeForm(
+        reset_request.user,
+        request.POST if request.method == "POST" else None,
+    )
 
     if request.method == "POST":
+        code = "".join(
+            request.POST.get(f"code{index}", "")
+            for index in range(1, 7)
+        )
 
-        # حداکثر ۵ تلاش
-        if attempts >= 5:
+        if reset_request.attempts >= 5:
+            reset_request.delete()
+            return redirect("accounts:forgot_password")
 
-            request.session.flush()
-
-            return redirect(
-                "accounts:forgot_password"
-            )
-
-        code = "".join([
-            request.POST.get("code1", ""),
-            request.POST.get("code2", ""),
-            request.POST.get("code3", ""),
-            request.POST.get("code4", ""),
-            request.POST.get("code5", ""),
-            request.POST.get("code6", ""),
-        ])
-
-        # افزایش تلاش
-        attempts += 1
-
-        request.session["forgot_attempts"] = attempts
-
-        # بررسی کد
-        if code == saved_code:
-
-            try:
-
-                user = User.objects.get(
-                    id=user_id,
-                    phone_number=phone
-                )
-
-            except User.DoesNotExist:
-
-                request.session.flush()
-
-                return redirect(
-                    "accounts:forgot_password"
-                )
-
-            # ورود کاربر
-            login(
-                request,
-                user
-            )
-
-            # پاک کردن Session مربوط به فراموشی رمز
-            request.session.pop(
-                "forgot_phone",
-                None
-            )
-
-            request.session.pop(
-                "forgot_user_id",
-                None
-            )
-
-            request.session.pop(
-                "forgot_code",
-                None
-            )
-
-            request.session.pop(
-                "forgot_attempts",
-                None
-            )
-
-            return redirect(
-                "accounts:profile"
-            )
-
-        else:
-
-            if attempts >= 5:
-
-                request.session.flush()
-
-                return redirect(
-                    "accounts:forgot_password"
-                )
-
-            remaining = 5 - attempts
-
-            error = (
-                f"کد وارد شده اشتباه است. "
-                f"{remaining} تلاش باقی مانده."
-            )
+        if len(code) != 6 or not code.isdigit() or not check_password(code, reset_request.code):
+            reset_request.attempts += 1
+            reset_request.save(update_fields=["attempts"])
+            error = "کد وارد شده اشتباه است."
+            if reset_request.attempts >= 5:
+                reset_request.delete()
+                error = "تعداد تلاش‌های مجاز به پایان رسید. لطفاً دوباره درخواست کد کنید."
+        elif password_form.is_valid():
+            user = password_form.save()
+            reset_request.delete()
+            login(request, user)
+            return redirect("accounts:profile")
 
     return render(
         request,
         "verify_forgot_password.html",
         {
-            "error": error
-        }
+            "error": error,
+            "form": password_form,
+            "phone_number": reset_request.user.phone_number,
+        },
     )
 # def signup(request):
 #     if request.user.is_authenticated:
@@ -575,7 +489,7 @@ def verify_forgot_password(request):
 #         request,
 #         "verify_email.html", {"error": error}
 #     )
-
+#!!!!!!!!!!!!!!!!!!!!!این قسمت از کد دارای اشکال می باشد و میبایست اصلاح شود.!!!!!!!!!!!!!!!!!!!!!
 def signup(request):
 
     if request.user.is_authenticated:
@@ -586,59 +500,36 @@ def signup(request):
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-
             user = form.save(commit=False)
 
-            # بررسی شماره تلفن
-            if User.objects.filter(
-                phone_number=user.phone_number
-            ).exists():
-
+            if User.objects.filter(phone_number=user.phone_number).exists():
                 form.add_error(
                     "phone_number",
                     "این شماره تلفن قبلاً ثبت نام کرده است."
                 )
-
-            # بررسی username
-            elif User.objects.filter(
-                username=user.username
-            ).exists():
-
+            elif User.objects.filter(username=user.username).exists():
                 form.add_error(
                     "username",
                     "این نام کاربری قبلاً استفاده شده است."
                 )
-
             else:
-
-                # ساخت کد ۶ رقمی
-                code = str(
-                    random.randint(100000, 999999)
+                code = f"{secrets.randbelow(900000) + 100000}"
+                PendingRegistration.objects.filter(
+                    phone_number=user.phone_number
+                ).delete()
+                pending = PendingRegistration.objects.create(
+                    username=user.username,
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    phone_number=user.phone_number,
+                    password=user.password,
+                    code=make_password(code),
                 )
-
-                # ذخیره اطلاعات ثبت نام در Session
-                request.session["signup_username"] = user.username
-                request.session["signup_first_name"] = user.first_name
-                request.session["signup_last_name"] = user.last_name
-                request.session["signup_phone"] = user.phone_number
-
-                # پسورد قبلاً توسط UserCreationForm هش شده
-                request.session["signup_password"] = user.password
-
-                # ذخیره کد
-                request.session["signup_code"] = code
-                request.session["signup_attempts"] = 0
-                request.session.set_expiry(120)
-
-                # چاپ کد در Terminal
-                print("=" * 40)
-                print("کد تأیید ثبت نام")
-                print(f"شماره تلفن: {user.phone_number}")
-                print(f"کد: {code}")
-                print("=" * 40)
+                print(f"Signup verification code for {user.phone_number}: {code}")
 
                 return redirect(
-                    "accounts:verify_email"
+                    "accounts:verify_email",
+                    token=pending.token,
                 )
 
     else:
@@ -652,61 +543,19 @@ def signup(request):
             "form": form
         }
     )
-def verify_email(request):
+def verify_email(request, token):
+    try:
+        pending = PendingRegistration.objects.get(token=token)
+    except PendingRegistration.DoesNotExist:
+        raise Http404("ثبت‌نام موقت پیدا نشد.")
 
-    # گرفتن اطلاعات ثبت نام از Session
-
-    username = request.session.get(
-        "signup_username"
-    )
-
-    first_name = request.session.get(
-        "signup_first_name"
-    )
-
-    last_name = request.session.get(
-        "signup_last_name"
-    )
-
-    phone_number = request.session.get(
-        "signup_phone"
-    )
-
-    password = request.session.get(
-        "signup_password"
-    )
-
-    saved_code = request.session.get(
-        "signup_code"
-    )
-    attempts = request.session.get(
-        "signup_attempts",
-        0
-    )
-
-    # اگر Session وجود نداشت
-    if not all([
-        username,
-        phone_number,
-        password,
-        saved_code
-    ]):
-
-        return redirect(
-            "accounts:signup"
-        )
+    if timezone.now() - pending.created_at > timedelta(minutes=10):
+        pending.delete()
+        return redirect("accounts:signup")
 
     error = None
 
     if request.method == "POST":
-        # حداکثر ۵ تلاش
-        if attempts >= 5:
-            request.session.flush()
-
-            return redirect(
-                "accounts:forgot_password"
-            )
-
         code = "".join([
             request.POST.get("code1", ""),
             request.POST.get("code2", ""),
@@ -715,87 +564,42 @@ def verify_email(request):
             request.POST.get("code5", ""),
             request.POST.get("code6", ""),
         ])
-        attempts += 1
+        if pending.attempts >= 5:
+            pending.delete()
+            return redirect("accounts:signup")
 
-        request.session["signup_attempts"] = attempts
+        pending.attempts += 1
+        pending.save(update_fields=["attempts"])
 
-        if code == saved_code:
-
-            # اطمینان دوباره از اینکه کاربر قبلاً ساخته نشده
-            if User.objects.filter(
-                username=username
-            ).exists():
-
+        if len(code) == 6 and code.isdigit() and check_password(code, pending.code):
+            if User.objects.filter(username=pending.username).exists():
                 error = "این نام کاربری قبلاً استفاده شده است."
-
-            elif User.objects.filter(
-                phone_number=phone_number
-            ).exists():
-
+            elif User.objects.filter(phone_number=pending.phone_number).exists():
                 error = "این شماره تلفن قبلاً ثبت نام کرده است."
-
             else:
-
-                # ساخت User واقعی
                 user = User(
-                    username=username,
-                    first_name=first_name,
-                    last_name=last_name,
-                    phone_number=phone_number,
-                    password=password,
+                    username=pending.username,
+                    first_name=pending.first_name,
+                    last_name=pending.last_name,
+                    phone_number=pending.phone_number,
+                    password=pending.password,
                     is_active=True,
                 )
-
                 user.save()
-
-                # پاک کردن اطلاعات ثبت نام از Session
-                request.session.pop(
-                    "signup_username",
-                    None
-                )
-
-                request.session.pop(
-                    "signup_first_name",
-                    None
-                )
-
-                request.session.pop(
-                    "signup_last_name",
-                    None
-                )
-
-                request.session.pop(
-                    "signup_phone",
-                    None
-                )
-
-                request.session.pop(
-                    "signup_password",
-                    None
-                )
-
-                request.session.pop(
-                    "signup_code",
-                    None
-                )
-                request.session.pop(
-                    "signup_attempts",
-                    None
-                )
-
-                return redirect(
-                    "accounts:login"
-                )
-
+                pending.delete()
+                return redirect("accounts:login")
         else:
-
             error = "کد تأیید اشتباه است."
+            if pending.attempts >= 5:
+                pending.delete()
+                error = "تعداد تلاش‌های مجاز به پایان رسید. لطفاً دوباره ثبت‌نام کنید."
 
     return render(
         request,
         "verify_email.html",
         {
-            "error": error
+            "error": error,
+            "phone_number": pending.phone_number,
         }
     )
 @login_required
@@ -974,6 +778,3 @@ class AboutUs(TemplateView):
 
 class RulesAndQuestions(TemplateView):
     template_name = "rules_and_questions.html"
-
-
-

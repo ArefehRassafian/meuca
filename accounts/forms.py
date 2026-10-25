@@ -17,6 +17,7 @@ class RegisterForm(UserCreationForm):
             "username",
             "first_name",
             "last_name",
+            "phone_number",
             "password1",
             "password2",
         )
@@ -38,6 +39,12 @@ class RegisterForm(UserCreationForm):
                 attrs={
                     "class": "form-control",
 
+                }
+            ),
+            "phone_number": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "inputmode": "numeric",
                 }
             ),
 

@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'django_filters',
     'django_cleanup.apps.CleanupConfig',
-    'django_render_partial'
+    'django_render_partial',
+    #for fonts in admin site after :python -m pip install django-admin-persian-fonts
+    'admin_persian',
 ]
 
 MIDDLEWARE = [

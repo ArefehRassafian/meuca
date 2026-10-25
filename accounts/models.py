@@ -1,4 +1,5 @@
 from pathlib import Path
+import uuid
 from uuid import uuid4
 
 from django.conf import settings
@@ -79,6 +80,36 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "کاربر"
         verbose_name_plural = "کاربران"
+
+
+class PendingRegistration(models.Model):
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    username = models.CharField(max_length=150)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    phone_number = models.CharField(max_length=11)
+    password = models.CharField(max_length=128)
+    code = models.CharField(max_length=128)
+    attempts = models.PositiveSmallIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+
+class PasswordResetRequest(models.Model):
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="password_reset_requests",
+    )
+    code = models.CharField(max_length=128)
+    attempts = models.PositiveSmallIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
 
 
 # =========================================================
@@ -210,4 +241,3 @@ class Message(models.Model):
 #         verbose_name = "کد فراموشی رمز"
 #         verbose_name_plural = "کدهای فراموشی رمز"
 #         ordering = ["-created_at"]
-

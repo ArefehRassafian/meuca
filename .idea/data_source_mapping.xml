@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/../../DjangoProject2/.idea/queries/Query.sql" value="7e0da7cb-4f52-4b38-810b-345b2c38db88" />
     <file url="file://$PROJECT_DIR$/.idea/queries/Query.sql" value="1e1c0dde-4a00-46f6-ab13-5e5ad9eb6bb2" />
   </component>
 </project>
